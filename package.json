@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.ts\"",
+    "db:seed": "tsx --env-file=.env src/models/populateDB.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

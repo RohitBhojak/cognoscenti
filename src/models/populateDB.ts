@@ -158,4 +158,7 @@ async function main() {
   }
 }
 
-await main();
+main().catch((err) => {
+  console.error('Seeding error:', err);
+  process.exit(1);
+});
