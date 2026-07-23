@@ -1,4 +1,4 @@
-const { Client } = require('pg');
+import { Client } from 'pg';
 
 const query = `
 -- USERS TABLE
@@ -158,4 +158,4 @@ async function main() {
   }
 }
 
-main();
+await main();
