@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS genres (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name TEXT NOT NULL,
   description TEXT,
+  created_by INT REFERENCES users(id) ON DELETE SET NULL,
 
   CONSTRAINT uq_genres_name UNIQUE (name),
   CONSTRAINT chk_genres_description_length CHECK (length(description) < 300)
@@ -27,11 +28,13 @@ CREATE TABLE IF NOT EXISTS movies (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   title TEXT NOT NULL,
   pitch TEXT,
-  photo_url TEXT,
+  poster_url TEXT,
+  banner_url TEXT,
   release_year INT NOT NULL,
   runtime INT NOT NULL,
   director TEXT NOT NULL,
   starring TEXT,
+  created_by INT REFERENCES users(id) ON DELETE SET NULL,
 
   CONSTRAINT uq_movies_title UNIQUE (title),
   CONSTRAINT chk_movies_title_length CHECK (length(title) < 200),
@@ -49,10 +52,19 @@ CREATE TABLE IF NOT EXISTS movies_genres (
   PRIMARY KEY (movie_id, genre_id)
 );
 
+-- MOVIE_STATUS ENUM
+DO $$ 
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'movie_status') THEN
+    CREATE TYPE movie_status AS ENUM ('watchlist', 'watched');
+  END IF;
+END $$;
+
 -- USERS_MOVIES JUNCTION TABLE
 CREATE TABLE IF NOT EXISTS users_movies (
   user_id INT REFERENCES users(id) ON DELETE CASCADE,
   movie_id INT REFERENCES movies(id) ON DELETE CASCADE,
+  status movie_status NOT NULL DEFAULT 'watchlist',
   PRIMARY KEY (user_id, movie_id)
 );
 
@@ -75,8 +87,8 @@ INSERT INTO genres (name, description) VALUES
 ON CONFLICT (name) DO NOTHING;
 
 
--- 3. SEED MOVIES (Mapped to title, pitch, photo_url, release_year, runtime, director)
-INSERT INTO movies (title, pitch, photo_url, release_year, runtime, director, starring) VALUES 
+-- 3. SEED MOVIES
+INSERT INTO movies (title, pitch, poster_url, release_year, runtime, director, starring) VALUES 
 ('About Time', 'A young man discovers he can travel back in time to change his own life.', 'https://example.com/about_time.jpg', 2013, 123, 'Richard Curtis', 'Domhnall Gleeson, Rachel McAdams'),
 ('A Silent Voice', 'A former bully tries to make amends with a deaf girl he tormented in elementary school.', 'https://example.com/silent_voice.jpg', 2016, 130, 'Naoko Yamada', 'Miyu Irino, Saori Hayami'),
 ('Your Name', 'Two strangers find themselves linked in a bizarre way when they wake up in each others bodies.', 'https://example.com/your_name.jpg', 2016, 106, 'Makoto Shinkai', 'Ryunosuke Kamiki, Mone Kamishirakeishi'),
@@ -94,35 +106,43 @@ INSERT INTO movies (title, pitch, photo_url, release_year, runtime, director, st
 ON CONFLICT (title) DO NOTHING;
 
 
--- 4. MAP MOVIES TO GENRES (Using title lookups instead of hardcoded IDs for total safety)
+-- 4. MAP MOVIES TO GENRES (Added missing mappings)
 INSERT INTO movies_genres (movie_id, genre_id) VALUES
 ((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'romance')),
 ((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'comedy')),
+((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'sci-fi')),
 
 ((SELECT id FROM movies WHERE title = 'A Silent Voice'), (SELECT id FROM genres WHERE name = 'animation')),
 ((SELECT id FROM movies WHERE title = 'A Silent Voice'), (SELECT id FROM genres WHERE name = 'drama')),
 
 ((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'animation')),
 ((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'romance')),
+((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'drama')),
 
 ((SELECT id FROM movies WHERE title = 'The Wind Rises'), (SELECT id FROM genres WHERE name = 'animation')),
 ((SELECT id FROM movies WHERE title = 'The Wind Rises'), (SELECT id FROM genres WHERE name = 'drama')),
 
 ((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'thriller')),
 ((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'sci-fi')),
 
 ((SELECT id FROM movies WHERE title = 'Grave of the Fireflies'), (SELECT id FROM genres WHERE name = 'animation')),
 ((SELECT id FROM movies WHERE title = 'Grave of the Fireflies'), (SELECT id FROM genres WHERE name = 'drama')),
 
 ((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'sci-fi')),
 ((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'action')),
 
 ((SELECT id FROM movies WHERE title = 'The Shining'), (SELECT id FROM genres WHERE name = 'thriller')),
+((SELECT id FROM movies WHERE title = 'The Shining'), (SELECT id FROM genres WHERE name = 'drama')),
 
 ((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'sci-fi')),
 ((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'action')),
+((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'thriller')),
 
 ((SELECT id FROM movies WHERE title = 'The Godfather'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'The Godfather'), (SELECT id FROM genres WHERE name = 'thriller')),
 
 ((SELECT id FROM movies WHERE title = 'John Wick'), (SELECT id FROM genres WHERE name = 'action')),
 ((SELECT id FROM movies WHERE title = 'John Wick'), (SELECT id FROM genres WHERE name = 'thriller')),
@@ -134,10 +154,17 @@ INSERT INTO movies_genres (movie_id, genre_id) VALUES
 
 ((SELECT id FROM movies WHERE title = 'Manchester by the Sea'), (SELECT id FROM genres WHERE name = 'drama'))
 ON CONFLICT DO NOTHING;
+
+
+-- 5. SEED USERS_MOVIES (OPTIONAL SAMPLE DATA FOR TESTING WATCHLIST)
+INSERT INTO users_movies (user_id, movie_id, status) VALUES
+((SELECT id FROM users WHERE username = 'rohit'), (SELECT id FROM movies WHERE title = 'Interstellar'), 'watched'),
+((SELECT id FROM users WHERE username = 'rohit'), (SELECT id FROM movies WHERE title = 'Inception'), 'watchlist')
+ON CONFLICT DO NOTHING;
 `;
 
 async function main() {
-  console.log('seeding...');
+  console.log('Seeding database...');
   const dbUri = process.argv[2] || process.env.DB_URI;
 
   if (!dbUri) {
@@ -150,9 +177,10 @@ async function main() {
   try {
     await client.connect();
     await client.query(query);
-    console.log('Done');
+    console.log('Database successfully seeded!');
   } catch (err) {
-    console.error('Error: ', err);
+    console.error('Error seeding database:', err);
+    process.exit(1);
   } finally {
     await client.end();
   }
