@@ -1,15 +1,15 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-primary: #d2ad6a;
-  --color-primary-light: #ffeed7;
-  --color-secondary: #3e3c38;
-  --color-secondary-light: #f5f0ea;
-  --color-tertiary: #706654;
-  --color-tertiary-light: #fdefd8;
-  --color-neutral-dark: #121212;
-  --color-neutral: #1a1a1a;
-  --color-neutral-light: #1f1f1f;
+  --color-primary: hsl(39, 54%, 62%);
+  --color-primary-light: hsl(39, 54%, 70%);
+  --color-secondary: hsl(40, 5%, 23%);
+  --color-secondary-light: hsl(40, 5%, 50%);
+  --color-tertiary: hsl(39, 14%, 38%);
+  --color-tertiary-light: hsl(39, 14%, 70%);
+  --color-neutral-dark: hsl(0, 0%, 7%);
+  --color-neutral: hsl(0, 0%, 10%);
+  --color-neutral-light: hsl(0, 0%, 12%);
 
   --font-sans: 'Manrope', sans-serif;
   --font-serif: 'Newsreader', serif;
