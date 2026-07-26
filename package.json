@@ -6,10 +6,10 @@
   "scripts": {
     "dev:css": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/output.css --watch",
     "dev:node": "tsx watch src/index.ts",
-    "dev": "npm run dev:css & npm run dev:node",
+    "dev": "concurrently -k \"npm run dev:css\" \"npm run dev:node\"",
     "build:css": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/output.css --minify",
     "build:node": "tsc",
-    "build": "npm run build:css & npm run build:node",
+    "build": "npm run build:css && npm run build:node",
     "start": "node --env-file=.env dist/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -34,6 +34,7 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.3.3",
     "bcrypt": "^6.0.0",
+    "concurrently": "^10.0.4",
     "ejs": "^5.0.2",
     "express": "^5.2.1",
     "express-validator": "^7.3.2",
