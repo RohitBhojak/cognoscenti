@@ -2,9 +2,14 @@
 
 @theme {
   --color-primary: #d2ad6a;
+  --color-primary-light: #ffeed7;
   --color-secondary: #3e3c38;
+  --color-secondary-light: #f5f0ea;
   --color-tertiary: #706654;
-  --color-neutral: #121212;
+  --color-tertiary-light: #fdefd8;
+  --color-neutral-dark: #121212;
+  --color-neutral: #1a1a1a;
+  --color-neutral-light: #1f1f1f;
 
   --font-sans: 'Manrope', sans-serif;
   --font-serif: 'Newsreader', serif;
