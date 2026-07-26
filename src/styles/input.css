@@ -5,4 +5,7 @@
   --color-secondary: #3e3c38;
   --color-tertiary: #706654;
   --color-neutral: #121212;
+
+  --font-primary: 'Manrope', sans-serif;
+  --font-headline: 'Newsreader', serif;
 }
