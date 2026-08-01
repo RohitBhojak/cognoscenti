@@ -6,7 +6,7 @@ export const getUserByUsername = async (username: string) => {
 };
 
 export const insertUser = async (username: string, password: string, isAdmin: boolean) => {
-  await pool.query('INSERT INTO users (username, password, isAdmin) VALUES ($1, $2, $3)', [
+  await pool.query('INSERT INTO users (username, password, is_admin) VALUES ($1, $2, $3)', [
     username,
     password,
     isAdmin,

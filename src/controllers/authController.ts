@@ -8,7 +8,7 @@ export const createUser = async (req: Request, res: Response) => {
     username: string;
     password: string;
     adminSecretKey: string;
-  }>(req.body);
+  }>(req);
 
   const hashedPassword = await bcrypt.hash(password, 10);
 

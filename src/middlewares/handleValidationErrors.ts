@@ -7,7 +7,7 @@ const handleValidationErrors = (req: Request, res: Response, next: NextFunction)
   if (errors.isEmpty()) {
     // Single field validation
     if (req.params.field) {
-      res.render('partials/formError');
+      return res.render('partials/formError');
     }
     // Form sign up validation
     return next();
@@ -16,13 +16,13 @@ const handleValidationErrors = (req: Request, res: Response, next: NextFunction)
   // Render single error
   if (req.params.field) {
     const firstError = errors.array()[0].msg;
-    res.render('partials/formError', { error: firstError });
+    return res.render('partials/formError', { error: firstError });
   }
 
   // Re-render sign up form
   return res.status(422).render('signUp', {
     errors: errors.mapped(),
-    values: req.body(),
+    values: req.body,
   });
 };
 
