@@ -1,20 +1,23 @@
 import { Request, Response } from 'express';
-import { getUserByUsername } from '../models/UserRepository.js';
+import { matchedData } from 'express-validator';
+import bcrypt from 'bcrypt';
+import { insertUser } from '../models/UserRepository.js';
 
-export const validateUsername = async (req: Request, res: Response) => {
-  const username = (req.body.username || '').trim().toLowerCase();
+export const createUser = async (req: Request, res: Response) => {
+  const { username, password, adminSecretKey } = matchedData<{
+    username: string;
+    password: string;
+    adminSecretKey: string;
+  }>(req.body);
 
-  let error = '';
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  if (username.length < 3) {
-    error = 'Username must be at least 3 characters';
-  } else if (username.length > 50) {
-    error = 'Username must be smaller than 50 characters';
-  } else {
-    const user = await getUserByUsername(username);
-    if (user) {
-      error = 'Username already exists';
-    }
+  await insertUser(username, hashedPassword, Boolean(adminSecretKey));
+
+  if (req.headers['hx-request']) {
+    res.setHeader('HX-Location', '/archive');
+    return res.status(200).end();
   }
-  res.render('partials/formError', { error });
+
+  return res.redirect('/archive');
 };

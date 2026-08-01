@@ -1,12 +1,10 @@
 <%- include("partials/header") %>
 
-<%- include("partials/formErrorTemplate") %>
-
 <form action="/sign-up" method="post" class="flex flex-col gap-8 max-w-xl bg-neutral mt-40 mx-auto p-10 rounded-lg">
-  <%- include("partials/inputText", {id: "username", label: "username", required: true, validateUrl: "/auth/validate-username"}) %>
-  <%- include("partials/inputText", {id: "password", label: "password", required: true, type: "password"}) %>
-  <%- include("partials/inputText", {id: "adminSecretKey", label: "admin secret key", type: "password"}) %>
-  <%- include("partials/buttonPrimary", {label: "Sign Up"})%>
+  <%- include("partials/inputText", {id: "username", label: "username", required: true, validateUrl: "/auth/validate/username"}) %>
+  <%- include("partials/inputText", {id: "password", label: "password", required: true, type: "password", validateUrl: "/auth/validate/password"}) %>
+  <%- include("partials/inputText", {id: "adminSecretKey", label: "admin secret key", type: "password", validateUrl: "/auth/validate/adminSecretKey"}) %>
+  <%- include("partials/buttonPrimary", {label: "Sign Up", type: "submit"})%>
   <hr class="text-secondary" />
   <p class="text-tertiary-light mx-auto">Already have an account? <a href="#" class="text-primary hover:text-primary-light">Login</a></p>
 </form>

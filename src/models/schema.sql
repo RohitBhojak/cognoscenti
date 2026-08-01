@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   created_at timestamptz DEFAULT NOW(),
 
   CONSTRAINT uq_users_username UNIQUE (username),
-  CONSTRAINT chk_users_username_length CHECK (length(username) BETWEEN 3 AND 50)
+  CONSTRAINT chk_users_username_length CHECK (length(username) BETWEEN 3 AND 30)
 );
 
 -- GENRES TABLE
