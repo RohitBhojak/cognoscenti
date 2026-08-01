@@ -37,8 +37,8 @@ export const validatePassword = () =>
 
 export const validateAdminSecretKey = () =>
   body('adminSecretKey')
-    .optional({ checkFalsy: true })
     .trim()
+    .optional({ checkFalsy: true })
     .custom(async (value) => {
       const adminSecretKey = process.env.ADMIN_SECRET_KEY;
 
