@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'node:path';
 import indexRouter from './routes/indexRouter.js';
+import * as icons from 'lucide-static';
 
 const app = express();
 const PORT = process.env.PORT || '3000';
@@ -10,6 +11,8 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.urlencoded({ extended: true }));
+
+app.locals.icons = icons;
 
 app.use('/', indexRouter);
 

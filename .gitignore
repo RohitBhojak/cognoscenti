@@ -1,4 +1,5 @@
 .env
 node_modules
 dist
-output.css
+public/scripts
+public/css
