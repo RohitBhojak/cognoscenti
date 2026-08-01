@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
   username TEXT NOT NULL,
   password TEXT NOT NULL,
   is_admin BOOLEAN DEFAULT false,
+  created_at timestamptz DEFAULT NOW(),
 
   CONSTRAINT uq_users_username UNIQUE (username),
   CONSTRAINT chk_users_username_length CHECK (length(username) BETWEEN 3 AND 50)
@@ -15,6 +16,7 @@ CREATE TABLE IF NOT EXISTS genres (
   name TEXT NOT NULL,
   description TEXT,
   created_by INT REFERENCES users(id) ON DELETE SET NULL,
+  created_at timestamptz DEFAULT NOW(),
 
   CONSTRAINT uq_genres_name UNIQUE (name),
   CONSTRAINT chk_genres_description_length CHECK (length(description) < 300)
@@ -32,6 +34,7 @@ CREATE TABLE IF NOT EXISTS movies (
   director TEXT NOT NULL,
   starring TEXT,
   created_by INT REFERENCES users(id) ON DELETE SET NULL,
+  created_at timestamptz DEFAULT NOW(),
 
   CONSTRAINT uq_movies_title UNIQUE (title),
   CONSTRAINT chk_movies_title_length CHECK (length(title) < 200),
@@ -62,5 +65,14 @@ CREATE TABLE IF NOT EXISTS users_movies (
   user_id INT REFERENCES users(id) ON DELETE CASCADE,
   movie_id INT REFERENCES movies(id) ON DELETE CASCADE,
   status movie_status NOT NULL DEFAULT 'watchlist',
+  created_at timestamptz DEFAULT NOW(),
   PRIMARY KEY (user_id, movie_id)
 );
+
+-- Reverse lookup indexes for junction tables
+CREATE INDEX IF NOT EXISTS idx_movies_genres_genre_id ON movies_genres(genre_id);
+CREATE INDEX IF NOT EXISTS idx_users_movies_movie_id ON users_movies(movie_id);
+
+-- Foreign key indexes for author tracking queries
+CREATE INDEX IF NOT EXISTS idx_genres_created_by ON genres(created_by);
+CREATE INDEX IF NOT EXISTS idx_movies_created_by ON movies(created_by);
