@@ -3,7 +3,10 @@
   <div class="input-container relative flex items-center">
     <input name="<%= id %>" id="<%= id %>" placeholder="Enter <%= label %>" type="<%= locals.type || "text"%>" class="w-full text-tertiary-light font-serif py-2 border-b focus:outline-none border-b-tertiary focus:border-b-primary transition-colors duration-300" />
     <% if (locals.type === "password") { %>
-    <button type="button" aria-label="Toggle password visibility" class="absolute cursor-pointer right-0 text-tertiary hover:text-primary transition-colors delay-300"><%- icons.Eye %></button>
+    <button type="button" aria-label="Toggle password visibility" data-toggle-password class="absolute cursor-pointer right-0 text-tertiary hover:text-primary transition-colors">
+      <span class="icon-eye"><%- icons.Eye %></span>
+      <span class="icon-eye-off hidden"><%- icons.EyeOff %></span>
+    </button>
     <% } %>
   </div>
 </div>
