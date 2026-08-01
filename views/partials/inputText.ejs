@@ -1,7 +1,7 @@
-<div class="flex flex-col">
+<div class="flex flex-col gap-1">
   <label for="<%= id %>" class="uppercase text-primary tracking-widest"><%= label %> <%= locals.required ? '*' : '' %></label>
   <div class="input-container relative flex items-center">
-    <input name="<%= id %>" id="<%= id %>" placeholder="Enter <%= label %>" type="<%= locals.type || "text"%>" class="w-full text-tertiary-light font-serif py-2 border-b focus:outline-none border-b-tertiary focus:border-b-primary transition-colors duration-300" />
+    <input name="<%= id %>" id="<%= id %>" placeholder="Enter <%= label %>" type="<%= locals.type || "text"%>" class="w-full text-tertiary-light font-serif py-2 border-b focus:outline-none border-b-tertiary focus:border-b-primary transition-colors duration-300" <% if(locals.validateUrl) {%> hx-post="<%- validateUrl %>" hx-trigger="keyup changed delay:300, blur" hx-target="#<%= id %>-error" hx-swap="innerHTML" hx-params="<%= id %>" <% } %> />
     <% if (locals.type === "password") { %>
     <button type="button" aria-label="Toggle password visibility" data-toggle-password class="absolute cursor-pointer right-0 text-tertiary hover:text-primary transition-colors">
       <span class="icon-eye"><%- icons.Eye %></span>
@@ -9,4 +9,5 @@
     </button>
     <% } %>
   </div>
+  <div id="<%= id %>-error"></div>
 </div>

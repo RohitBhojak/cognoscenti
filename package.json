@@ -6,7 +6,7 @@
   "scripts": {
     "dev:css": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/css/output.css --watch",
     "dev:scripts": "esbuild src/scripts/*.ts --outdir=public/scripts --watch",
-    "dev:node": "tsx watch src/index.ts",
+    "dev:node": "tsx watch --env-file=.env src/index.ts",
     "dev": "concurrently -k \"npm run dev:css\" \"npm run dev:scripts\" \"npm run dev:node\"",
     "build:css": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/css/output.css --minify",
     "build:scripts": "esbuild src/scripts/*.ts --outdir=public/scripts --minify",
