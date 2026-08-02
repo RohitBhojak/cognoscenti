@@ -9,7 +9,10 @@ async function runSql(client: Client, fileName: string) {
 
 async function main() {
   const { values } = parseArgs({
-    options: { schema: { type: 'string' }, seed: { type: 'string' }, uri: { type: 'string' } },
+    options: {
+      sql: { type: 'string' },
+      uri: { type: 'string' },
+    },
   });
   const dbUri = values.uri || process.env.DB_URI;
 
@@ -18,8 +21,8 @@ async function main() {
     process.exit(1);
   }
 
-  if (!values.schema && !values.seed) {
-    console.error('Error: Please specify at least one file to execute (--schema or --seed).');
+  if (!values.sql) {
+    console.error('Error: No sql file provided in arguments.');
     process.exit(1);
   }
 
@@ -28,14 +31,9 @@ async function main() {
   try {
     await client.connect();
 
-    if (values.schema) {
-      await runSql(client, values.schema);
-      console.log('Tables added successfully!');
-    }
-
-    if (values.seed) {
-      await runSql(client, values.seed);
-      console.log('Data seeded successfully!');
+    if (values.sql) {
+      await runSql(client, values.sql);
+      console.log(values.sql, 'executed successfully!');
     }
   } catch (err) {
     console.error('Error seeding database:', err);
