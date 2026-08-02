@@ -20,7 +20,7 @@ const handleValidationErrors = (req: Request, res: Response, next: NextFunction)
   }
 
   // Re-render sign up form
-  return res.status(422).render('signUp', {
+  return res.render('signUp', {
     errors: errors.mapped(),
     values: req.body,
   });

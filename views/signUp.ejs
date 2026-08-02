@@ -4,11 +4,12 @@
   <%- include("partials/inputText", {id: "username", label: "username", required: true, validateUrl: "/auth/validate/username"}) %>
   <%- include("partials/inputText", {id: "password", label: "password", required: true, type: "password", validateUrl: "/auth/validate/password"}) %>
   <%- include("partials/inputText", {id: "adminSecretKey", label: "admin secret key", type: "password", validateUrl: "/auth/validate/adminSecretKey"}) %>
-  <%- include("partials/buttonPrimary", {label: "Sign Up", type: "submit"})%>
+  <%- include("partials/buttonPrimary", {label: "Sign Up", type: "submit", disabled: true})%>
   <hr class="text-secondary" />
   <p class="text-tertiary-light mx-auto">Already have an account? <a href="#" class="text-primary hover:text-primary-light">Login</a></p>
 </form>
 
 <script src="/scripts/togglePassword.js"></script>
+<script src="/scripts/disableSubmitButton.js"></script>
 
 <%- include("partials/footer") %>
