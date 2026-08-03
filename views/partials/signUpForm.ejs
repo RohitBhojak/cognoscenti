@@ -1,0 +1,8 @@
+<form hx-post="/auth/sign-up" hx-swap="outerHTML" class="flex flex-col gap-8 max-w-xl bg-neutral mt-40 mx-auto p-10 rounded-lg">
+  <%- include("../components/inputText", {id: "username", label: "username", required: true, validateUrl: "/auth/validate/username"}) %>
+  <%- include("../components/inputText", {id: "password", label: "password", required: true, type: "password", validateUrl: "/auth/validate/password"}) %>
+  <%- include("../components/inputText", {id: "adminSecretKey", label: "admin secret key", type: "password", validateUrl: "/auth/validate/adminSecretKey"}) %>
+  <%- include("../components/buttonPrimary", {label: "Sign Up", type: "submit", disabled: true})%>
+  <hr class="text-secondary" />
+  <p class="text-tertiary-light mx-auto">Already have an account? <a href="#" class="text-primary hover:text-primary-light">Login</a></p>
+</form>

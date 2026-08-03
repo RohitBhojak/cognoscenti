@@ -1,29 +1,44 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 
-const handleValidationErrors = (req: Request, res: Response, next: NextFunction) => {
-  const errors = validationResult(req);
+interface ValidationConfig {
+  pageView: string;
+  partialView?: string;
+  fieldErrorView?: string;
+}
 
-  if (errors.isEmpty()) {
-    // Single field validation
-    if (req.params.field) {
-      return res.render('partials/formError');
+const handleValidationErrors = (config: ValidationConfig) => {
+  const { pageView, partialView = pageView, fieldErrorView = 'components/formError' } = config;
+  return (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+
+    if (errors.isEmpty()) {
+      // Remove validation error
+      if (req.params.field) {
+        return res.send('');
+      }
+      return next();
     }
-    // Form sign up validation
-    return next();
-  }
 
-  // Render single error
-  if (req.params.field) {
-    const firstError = errors.array()[0].msg;
-    return res.render('partials/formError', { error: firstError });
-  }
+    // Render single error
+    if (req.params.field) {
+      const firstError = errors.array()[0].msg;
+      return res.render(fieldErrorView, { error: firstError });
+    }
 
-  // Re-render sign up form
-  return res.render('signUp', {
-    errors: errors.mapped(),
-    values: req.body,
-  });
+    // Re-render form with errors
+    if (req.get('HX-Request')) {
+      return res.render(partialView, {
+        errors: errors.mapped(),
+        values: req.body,
+      });
+    }
+
+    return res.renderView(pageView, {
+      errors: errors.mapped(),
+      values: req.body,
+    });
+  };
 };
 
 export default handleValidationErrors;

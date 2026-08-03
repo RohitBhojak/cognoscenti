@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'node:path';
 import indexRouter from './routes/indexRouter.js';
 import * as icons from 'lucide-static';
+import renderViewMiddleware from './middlewares/renderView.js';
 
 const app = express();
 const PORT = process.env.PORT || '3000';
@@ -13,6 +14,8 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 app.locals.icons = icons;
+
+app.use(renderViewMiddleware);
 
 app.use('/', indexRouter);
 
