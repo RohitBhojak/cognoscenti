@@ -16,6 +16,32 @@
 </head>
 
 <body class="bg-neutral-dark antialiased m-5">
+
+  <header>
+    <nav class="flex justify-between">
+      <div class="text-primary"><%- icons.Clapperboard %></div>
+      <ul class="flex text-tertiary-light gap-4">
+        <% 
+        const links = [
+          { name: "archive", path: "/" },
+          { name: "genres", path: "/genres" },
+          { name: "submit", path: "/submit" }
+        ];
+        const active = locals.activePage || '';
+      %>
+        <% for (const link of links) { %>
+        <% const isActive = active === link.name; %>
+        <li>
+          <a href="<%= link.path %>" class="hover:text-primary transition-all capitalize font-serif py-1 <%= isActive ? 'text-primary border-b-2 border-primary' : '' %>">
+            <%= link.name %>
+          </a>
+        </li>
+        <% } %>
+      </ul>
+      <div class="text-primary"><%- icons.CircleUserRound %></div>
+    </nav>
+  </header>
+
   <%- body %>
 
 </body>

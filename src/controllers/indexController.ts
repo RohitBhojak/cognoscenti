@@ -1,9 +1,5 @@
 import { Request, Response } from 'express';
 
 export const renderHomePage = (req: Request, res: Response) => {
-  res.renderView('pages/signUp');
-};
-
-export const renderArchivePage = (req: Request, res: Response) => {
-  res.renderView('partials/archive');
+  res.renderView('partials/archive', { activePage: 'archive' });
 };

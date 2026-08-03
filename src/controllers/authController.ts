@@ -20,7 +20,7 @@ export const createUser = async (req: Request, res: Response) => {
 
   // HTMX redirect for HTMX requests
   if (req.get('hx-request')) {
-    res.setHeader('HX-Location', '/archive');
+    res.setHeader('HX-Location', '/');
     return res.status(200).end();
   }
 
