@@ -16,7 +16,7 @@ export const createUser = async (req: Request, res: Response) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await insertUser(username, hashedPassword, Boolean(adminSecretKey));
+  await insertUser({ username, password: hashedPassword, is_admin: Boolean(adminSecretKey) });
 
   // HTMX redirect for HTMX requests
   if (req.get('hx-request')) {

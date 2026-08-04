@@ -1,9 +1,12 @@
 export interface User {
   id: number;
   username: string;
-  password_hash: string;
+  password: string;
   is_admin: boolean;
+  created_at: string;
 }
+
+export type CreateUserInput = Omit<User, 'id' | 'created_at'>;
 
 export interface Movie {
   id: number;
@@ -16,12 +19,14 @@ export interface Movie {
   director: string;
   starring: string | null;
   created_by?: number | null;
+  created_at: string;
 }
 
 export interface Genre {
   id: number;
   name: string;
   description: string | null;
+  created_at: string;
 }
 
 export const MOVIE_STATUS = ['watched', 'watchlist'] as const;
