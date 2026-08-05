@@ -10,11 +10,11 @@ export const configurePassport = (): void => {
       try {
         const user = await getUserByUsername(username);
         if (!user) {
-          return done(null, false, { message: 'Incorrect username' });
+          return done(null, false, { message: 'Incorrect username', field: 'username' });
         }
         const isPasswordMatched = await bcrypt.compare(password, user.password);
         if (!isPasswordMatched) {
-          return done(null, false, { message: 'Incorrect password' });
+          return done(null, false, { message: 'Incorrect password', field: 'password' });
         }
         return done(null, user);
       } catch (error) {

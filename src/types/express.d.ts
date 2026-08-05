@@ -1,5 +1,4 @@
 import { User as AppUser } from './database.ts';
-export {};
 
 declare global {
   namespace Express {
