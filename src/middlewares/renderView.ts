@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 const renderViewMiddleware = (req: Request, res: Response, next: NextFunction) => {
   res.renderView = (view: string, data: Record<string, unknown> = {}) => {
     // HTMX AJAX Request: Render only the requested snippet
-    if (req.get('HX-Request')) {
+    if (req.get('hx-request')) {
       return res.render(view, data);
     }
 

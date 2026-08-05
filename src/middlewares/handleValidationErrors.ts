@@ -27,7 +27,7 @@ const handleValidationErrors = (config: ValidationConfig) => {
     }
 
     // Re-render form with errors
-    if (req.get('HX-Request')) {
+    if (req.get('hx-request')) {
       return res.render(partialView, {
         errors: errors.mapped(),
         values: req.body,
