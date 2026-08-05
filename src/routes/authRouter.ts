@@ -2,8 +2,18 @@ import { Router } from 'express';
 
 import dynamicFieldValidator from '../middlewares/dynamicFieldValidator.js';
 import handleValidationErrors from '../middlewares/handleValidationErrors.js';
-import { validateAdminSecretKey, validatePassword, validateUsername } from '../utils/validators.js';
-import { createUser, renderSignUpPage } from '../controllers/authController.js';
+import {
+  loginValidators,
+  validateAdminSecretKey,
+  validatePassword,
+  validateUsername,
+} from '../utils/validators.js';
+import {
+  createUser,
+  login,
+  renderLoginPage,
+  renderSignUpPage,
+} from '../controllers/authController.js';
 
 const authRouter = Router();
 
@@ -20,6 +30,15 @@ authRouter.post(
   '/validate/:field',
   dynamicFieldValidator,
   handleValidationErrors({ pageView: 'pages/signUp' })
+);
+
+authRouter.get('/login', renderLoginPage);
+
+authRouter.post(
+  '/login',
+  loginValidators,
+  handleValidationErrors({ pageView: 'pages/login' }),
+  login
 );
 
 export default authRouter;
