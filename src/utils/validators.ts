@@ -59,3 +59,8 @@ export const fieldValidators: Record<string, () => ValidationChain> = {
   password: validatePassword,
   adminSecretKey: validateAdminSecretKey,
 } as const;
+
+export const loginValidators = [
+  body('username').trim().notEmpty().withMessage('Username is required').toLowerCase(),
+  body('password').trim().notEmpty().withMessage('Password is required'),
+];
