@@ -17,8 +17,8 @@ export const configurePassport = (): void => {
           return done(null, false, { message: 'Incorrect password', field: 'password' });
         }
         return done(null, user);
-      } catch (error) {
-        done(error);
+      } catch (err) {
+        done(err);
       }
     })
   );
@@ -36,8 +36,8 @@ export const configurePassport = (): void => {
         return done(null, false);
       }
       done(null, user);
-    } catch (error) {
-      done(error);
+    } catch (err) {
+      done(err);
     }
   });
 };

@@ -28,7 +28,7 @@ app.use(renderViewMiddleware);
 
 app.use('/', indexRouter);
 
-app.listen(PORT, (error) => {
-  if (error) throw error;
+app.listen(PORT, (err) => {
+  if (err) throw err;
   console.log('Listening on PORT:', PORT);
 });
