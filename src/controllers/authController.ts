@@ -28,12 +28,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
   req.logIn(user, (err) => {
     if (err) return next(err);
 
-    if (req.get('hx-request')) {
-      res.setHeader('HX-Location', '/');
-      return res.status(200).end();
-    }
-
-    return res.redirect('/');
+    res.redirectHtmx('/', true);
   });
 };
 
@@ -61,14 +56,20 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
     }
 
     req.logIn(user, (err) => {
-      if (err) return next(err);
-
-      if (req.get('hx-request')) {
-        res.setHeader('HX-Location', '/');
-        return res.status(200).end();
+      if (err) {
+        return next(err);
       }
 
-      return res.redirect('/');
+      res.redirectHtmx('/', true);
     });
   })(req, res, next);
+};
+
+const logout = (req: Request, res: Response, next: NextFunction) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirectHtmx('/', true);
+  });
 };

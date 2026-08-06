@@ -7,6 +7,7 @@ declare global {
 
     interface Response {
       renderView: (view: string, data?: Record<string, unknown>) => void;
+      redirectHtmx: (url: string, redirect?: boolean) => void;
     }
   }
 }

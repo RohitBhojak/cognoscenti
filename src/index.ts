@@ -6,6 +6,7 @@ import renderViewMiddleware from './middlewares/renderView.js';
 import session from 'express-session';
 import passport from 'passport';
 import { configurePassport } from './config/passport.js';
+import redirectMiddleware from './middlewares/redirect.js';
 
 const app = express();
 const PORT = process.env.PORT || '3000';
@@ -25,6 +26,7 @@ app.use(passport.session());
 app.locals.icons = icons;
 
 app.use(renderViewMiddleware);
+app.use(redirectMiddleware);
 
 app.use('/', indexRouter);
 
