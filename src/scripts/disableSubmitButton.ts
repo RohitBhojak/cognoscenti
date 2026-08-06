@@ -3,9 +3,12 @@ const formHasError = () => {
   if (!form) return false;
   if (!form.checkValidity()) return true;
 
-  const errors = form.querySelectorAll('[data-error]');
+  if (form.dataset.validateInline) {
+    const errors = form.querySelectorAll('[data-error]');
+    return Array.from(errors).some((error) => error.innerHTML.trim() !== '');
+  }
 
-  return Array.from(errors).some((error) => error.innerHTML.trim() !== '');
+  return false;
 };
 
 const updateSubmitButtonState = () => {
@@ -16,3 +19,4 @@ const updateSubmitButtonState = () => {
 };
 
 document.body.addEventListener('htmx:afterSwap', updateSubmitButtonState);
+document.body.addEventListener('input', updateSubmitButtonState);

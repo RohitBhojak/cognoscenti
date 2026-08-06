@@ -1,5 +1,5 @@
-<form hx-post="/auth/login" hx-swap="outerHTML" class="flex flex-col gap-8 max-w-xl bg-neutral mt-40 mx-auto p-10 rounded-lg">
+<form id="login" hx-post="/auth/login" hx-swap="outerHTML" class="flex flex-col gap-8 max-w-xl bg-neutral mt-40 mx-auto p-10 rounded-lg">
   <%- include("../components/inputText", {id: "username", label: "username", required: true}) %>
   <%- include("../components/inputText", {id: "password", label: "password", required: true, type: "password"}) %>
-  <%- include("../components/buttonPrimary", {label: "Login", type: "submit"})%>
+  <%- include("../components/buttonPrimary", {label: "Login", type: "submit", disabled: true})%>
 </form>
