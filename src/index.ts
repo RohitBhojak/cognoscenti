@@ -7,6 +7,7 @@ import session from 'express-session';
 import passport from 'passport';
 import { configurePassport } from './config/passport.js';
 import redirectMiddleware from './middlewares/redirect.js';
+import setUser from './middlewares/setUser.js';
 
 const app = express();
 const PORT = process.env.PORT || '3000';
@@ -24,6 +25,7 @@ app.use(session({ secret, resave: false, saveUninitialized: false }));
 app.use(passport.session());
 
 app.locals.icons = icons;
+app.use(setUser);
 
 app.use(renderViewMiddleware);
 app.use(redirectMiddleware);
