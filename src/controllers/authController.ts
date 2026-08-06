@@ -48,6 +48,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 
       const errors = { [errorField]: { msg: errorMessage } };
 
+      res.status(401);
       if (req.get('hx-request')) {
         return res.render('partials/loginForm', { errors, values: req.body });
       }

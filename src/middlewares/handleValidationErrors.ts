@@ -13,13 +13,15 @@ const handleValidationErrors = (config: ValidationConfig) => {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
-      // Remove validation error
+      // Remove validation error for validate request
       if (req.params.field) {
         return res.send('');
       }
+      // Move on to next middleware for form submit request
       return next();
     }
 
+    res.status(422);
     // Render single error
     if (req.params.field) {
       const firstError = errors.array()[0].msg;
