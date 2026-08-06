@@ -46,7 +46,7 @@
 
   <script>
     document.body.addEventListener('htmx:beforeSwap', function(e) {
-      if (e.detail.xhr.status === 422) {
+      if (e.detail.xhr.status >= 400 && e.detail.xhr.status < 500) {
         e.detail.shouldSwap = true;
         e.detail.isError = false;
       }

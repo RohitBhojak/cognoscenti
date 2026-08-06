@@ -20,6 +20,8 @@
     "db:seed": "tsx --env-file=.env src/models/populateDB.ts --sql=src/models/seed.sql",
     "db:reset": "tsx --env-file=.env src/models/populateDB.ts --sql=src/models/reset.sql",
     "db:setup": "npm run db:reset && npm run db:schema && npm run db:seed",
+    "hash": "node -e \"console.log(require('bcrypt').hashSync(process.argv[1], 10))\"",
+    "secret": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
