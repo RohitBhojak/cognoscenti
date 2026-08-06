@@ -13,6 +13,7 @@ import {
   login,
   renderLoginPage,
   renderSignUpPage,
+  logout,
 } from '../controllers/authController.js';
 
 const authRouter = Router();
@@ -40,5 +41,7 @@ authRouter.post(
   handleValidationErrors({ pageView: 'pages/login' }),
   login
 );
+
+authRouter.get('/logout', logout);
 
 export default authRouter;

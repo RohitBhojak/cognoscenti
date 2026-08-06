@@ -66,7 +66,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
   })(req, res, next);
 };
 
-const logout = (req: Request, res: Response, next: NextFunction) => {
+export const logout = (req: Request, res: Response, next: NextFunction) => {
   req.logout((err) => {
     if (err) {
       return next(err);
