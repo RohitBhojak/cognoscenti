@@ -5,9 +5,9 @@ const redirectMiddleware = (req: Request, res: Response, next: NextFunction) => 
     if (req.get('hx-request')) {
       if (redirect) {
         res.setHeader('HX-Redirect', url);
-      } else {
-        res.setHeader('HX-Location', url);
+        return res.status(204).end();
       }
+      res.setHeader('HX-Location', url);
       return res.status(200).end();
     }
 

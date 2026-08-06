@@ -15,10 +15,11 @@ import {
   renderSignUpPage,
   logout,
 } from '../controllers/authController.js';
+import { preventCache, requireGuest } from '../middlewares/accessGuard.js';
 
 const authRouter = Router();
 
-authRouter.get('/sign-up', renderSignUpPage);
+authRouter.get('/sign-up', preventCache, requireGuest, renderSignUpPage);
 
 authRouter.post(
   '/sign-up',
@@ -33,7 +34,7 @@ authRouter.post(
   handleValidationErrors({ pageView: 'pages/signUp' })
 );
 
-authRouter.get('/login', renderLoginPage);
+authRouter.get('/login', preventCache, requireGuest, renderLoginPage);
 
 authRouter.post(
   '/login',
@@ -42,6 +43,6 @@ authRouter.post(
   login
 );
 
-authRouter.get('/logout', logout);
+authRouter.post('/logout', logout);
 
 export default authRouter;
