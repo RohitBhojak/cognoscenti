@@ -2,4 +2,6 @@
   <%- include("../components/inputText", {id: "username", label: "username", required: true}) %>
   <%- include("../components/inputText", {id: "password", label: "password", required: true, type: "password"}) %>
   <%- include("../components/buttonPrimary", {label: "Login", type: "submit", disabled: true})%>
+  <hr class="text-secondary" />
+  <p class="text-tertiary-light mx-auto">Don't have an account? <a href="/auth/sign-up" hx-boost="true" hx-target="#app" hx-swap="innerHTML" class="text-primary hover:text-primary-light">Create Account</a></p>
 </form>
