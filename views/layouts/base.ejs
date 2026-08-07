@@ -5,34 +5,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= locals.title || "Cognoscenti" %></title>
-  <!-- Compiled Tailwind CSS -->
   <link rel="stylesheet" href="/css/output.css">
-  <!-- HTMX -->
-  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
-  <!-- Fallback for older browsers -->
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" sizes="any">
-  <!-- Modern SVG icon for current browsers -->
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
+  <script src="/scripts/togglePassword.js" defer></script>
+  <script src="/scripts/disableSubmitButton.js" defer></script>
+  <script src="/scripts/htmx4xx.js" defer></script>
 </head>
 
 <body class="bg-neutral-dark antialiased m-5">
-
   <header>
-    <nav class="flex justify-between">
-      <div class="text-primary"><%- icons.Clapperboard %></div>
+    <nav class="flex justify-between items-center">
+      <a href="/" hx-boost="true" hx-target="#app" class="text-primary font-serif font-bold text-lg uppercase">Cognoscenti</a>
+
       <ul class="flex text-tertiary-light gap-4">
         <% 
-        const links = [
-          { name: "archive", path: "/" },
-          { name: "genres", path: "/genres" },
-          { name: "submit", path: "/submit" }
-        ];
-        const active = locals.activePage || '';
+      const navLinks = [
+        { name: "archive", path: "/" },
+        { name: "genres", path: "/genres" },
+        { name: "submit", path: "/submit" }
+      ];
+      const active = locals.activePage || '';
       %>
-        <% for (const link of links) { %>
+        <% for (const link of navLinks) { %>
         <% const isActive = active === link.name; %>
         <li>
           <a href="<%= link.path %>" class="hover:text-primary transition-all capitalize font-serif py-1 <%= isActive ? 'text-primary border-b-2 border-primary' : '' %>">
@@ -41,23 +40,38 @@
         </li>
         <% } %>
       </ul>
-      <div class="text-primary"><%- icons.CircleUserRound %></div>
+
+      <% if (locals.currentUser) { %>
+      <div class="relative group">
+        <button type="button" class="text-primary hover:text-primary-light transition-colors flex items-center gap-1 focus:outline-none cursor-pointer [&>svg]:w-7 [&>svg]:h-7">
+          <%- icons.CircleUserRound %>
+        </button>
+
+        <div class="absolute right-0 top-full hidden group-hover:block w-48 bg-neutral-dark border border-neutral-700 rounded-md shadow-lg py-2 z-50">
+          <a href="/my-archive" class="flex items-center gap-2 px-4 py-2 text-sm text-tertiary-light hover:text-primary hover:bg-neutral-800 transition-colors">
+            <%- icons.Bookmark || '' %>
+            <span>My Archive</span>
+          </a>
+
+          <div class="border-t border-neutral-700 my-2"></div>
+
+          <button hx-post="/auth/logout" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-error hover:bg-neutral-800 transition-colors cursor-pointer">
+            <%- icons.LogOut || '' %>
+            <span>Log Out</span>
+          </button>
+        </div>
+      </div>
+      <% } else { %>
+      <a href="/auth/login" hx-boost="true" hx-target="#app" hx-swap="innerHTML" class="bg-primary text-center text-sm py-1 rounded-sm w-20 uppercase transition-colors hover:bg-primary-light font-semibold duration-300">
+        login
+      </a>
+      <% } %>
     </nav>
   </header>
 
   <main id="app">
     <%- body %>
   </main>
-
-  <script>
-    document.body.addEventListener('htmx:beforeSwap', function(e) {
-      if (e.detail.xhr.status >= 400 && e.detail.xhr.status < 500) {
-        e.detail.shouldSwap = true;
-        e.detail.isError = false;
-      }
-    });
-  </script>
-
 </body>
 
 </html>
