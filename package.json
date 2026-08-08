@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev:css": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/css/output.css --watch",
-    "dev:scripts": "esbuild src/scripts/*.ts --outdir=public/scripts --watch",
+    "dev:scripts": "esbuild src/scripts/main.ts --bundle --outfile=public/scripts/app.min.js --watch",
     "dev:node": "tsx watch --env-file=.env src/index.ts",
     "dev": "concurrently -k \"npm run dev:css\" \"npm run dev:scripts\" \"npm run dev:node\"",
     "build:css": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/css/output.css --minify",
-    "build:scripts": "esbuild src/scripts/*.ts --outdir=public/scripts --minify",
+    "build:scripts": "esbuild src/scripts/main.ts --bundle --outfile=public/scripts/app.min.js --minify",
     "build:node": "tsc",
     "build": "npm run build:css && npm run build:scripts && npm run build:node",
     "start": "node --env-file=.env dist/index.js",
