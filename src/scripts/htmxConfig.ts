@@ -1,4 +1,4 @@
-// If using imported types or standard window event
+// Allow htmx to render 4xx status responses
 document.body.addEventListener('htmx:beforeSwap', (event: Event) => {
   const customEvent = event as CustomEvent<{
     xhr: XMLHttpRequest;
