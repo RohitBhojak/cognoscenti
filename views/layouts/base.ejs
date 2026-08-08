@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
   <script src="/scripts/htmxConfig.js" defer></script>
+  <script src="/scripts/highlightActiveLink.js" defer></script>
   <script src="/scripts/togglePassword.js" defer></script>
   <script src="/scripts/disableSubmitButton.js" defer></script>
 </head>
@@ -22,19 +23,17 @@
     <nav class="flex justify-between items-center">
       <a href="/" hx-get="/" hx-target="#app" hx-swap="innerHTML" class="text-primary font-serif font-bold text-lg uppercase">Cognoscenti</a>
 
-      <ul class="flex text-tertiary-light gap-4">
+      <ul id="nav-list" class="flex text-tertiary-light gap-4">
         <% 
       const navLinks = [
         { name: "archive", path: "/" },
         { name: "genres", path: "/genres" },
         { name: "submit", path: "/submit" }
       ];
-      const active = locals.activePage || '';
       %>
         <% for (const link of navLinks) { %>
-        <% const isActive = active === link.name; %>
         <li>
-          <a href="<%= link.path %>" hx-get="<%= link.path %>" hx-target="#app" hx-swap="innerHTML" hx-push-url="true" class="hover:text-primary transition-all capitalize font-serif py-1 <%= isActive ? 'text-primary border-b-2 border-primary' : '' %>">
+          <a href="<%= link.path %>" hx-get="<%= link.path %>" hx-target="#app" hx-swap="innerHTML" hx-push-url="true" class="hover:text-primary transition-all capitalize font-serif py-1">
             <%= link.name %>
           </a>
         </li>
@@ -48,7 +47,7 @@
           <%- icons.CircleUserRound %>
         </button>
 
-        <div class="absolute right-0 top-full hidden group-hover:block w-52 border border-neutral-700 rounded-md shadow-lg py-1 z-50">
+        <div class="absolute right-0 top-full hidden group-hover:block w-52 border border-neutral-700 rounded-md shadow-lg py-1 z-50 bg-neutral">
           <div class="px-4 py-2 mb-1 border-b border-neutral-800">
             <p class="text-xs text-tertiary-light/80">Signed in as</p>
             <p class="text-sm font-semibold text-primary wrap-break-word"><%= currentUser.username %></p>
@@ -71,19 +70,19 @@
           <%- icons.CircleUserRound || '' %>
         </button>
 
-        <div class="absolute right-0 top-full hidden group-hover:block w-48 border border-neutral-700 rounded-md shadow-lg py-1 z-50">
+        <div class="absolute right-0 top-full hidden group-hover:block w-48 border border-neutral-700 rounded-md shadow-lg py-1 z-50 bg-neutral text-tertiary-light">
           <div class="px-4 py-2 mb-1 text-xs font-semibold uppercase tracking-wider text-tertiary-light/80 border-b border-neutral-800">
             Guest
           </div>
 
-          <a href="/auth/login" hx-get="/auth/login" hx-target="#app" hx-push-url="true" class="flex items-center gap-2 px-4 py-2 text-sm text-tertiary-light hover:text-primary hover:bg-neutral-800 transition-colors">
+          <a href="/auth/login" hx-get="/auth/login" hx-target="#app" hx-push-url="true" class="flex items-center gap-2 px-4 py-2 text-sm hover:text-primary hover:bg-neutral-800 transition-colors">
             <%- icons.LogIn || '' %>
             <span>Log In</span>
           </a>
 
           <div class="border-t border-neutral-800 my-1"></div>
 
-          <a href="/auth/sign-up" hx-get="/auth/sign-up" hx-target="#app" hx-push-url="true" class="flex items-center gap-2 px-4 py-2 text-sm text-tertiary-light hover:text-primary hover:bg-neutral-800 transition-colors font-medium">
+          <a href="/auth/sign-up" hx-get="/auth/sign-up" hx-target="#app" hx-push-url="true" class="flex items-center gap-2 px-4 py-2 text-sm hover:text-primary hover:bg-neutral-800 transition-colors font-medium">
             <%- icons.UserPlus || '' %>
             <span>Create Account</span>
           </a>
