@@ -34,5 +34,5 @@ app.use('/', indexRouter);
 
 app.listen(PORT, (err) => {
   if (err) throw err;
-  console.log('Listening on PORT:', PORT);
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
