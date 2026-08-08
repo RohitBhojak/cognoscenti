@@ -41,16 +41,16 @@
         <% } %>
       </ul>
 
-      <div class="relative group py-2">
+      <div class="relative group">
         <% if (locals.currentUser) { %>
-        <button type="button" aria-label="User Account" class="text-primary hover:text-primary-light transition-colors flex items-center gap-2 focus:outline-none cursor-pointer [&>svg]:w-7 [&>svg]:h-7">
+        <button type="button" aria-label="User Account" class="text-primary hover:text-primary-light transition-colors flex items-center focus:outline-none cursor-pointer [&>svg]:w-7 [&>svg]:h-7">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 absolute right-8"></span>
           <%- icons.CircleUserRound %>
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
         </button>
 
-        <div class="absolute right-0 top-full hidden group-hover:block w-52 bg-neutral-dark border border-neutral-700 rounded-md shadow-lg py-1 z-50">
+        <div class="absolute right-0 top-full hidden group-hover:block w-52 border border-neutral-700 rounded-md shadow-lg py-1 z-50">
           <div class="px-4 py-2 mb-1 border-b border-neutral-800">
-            <p class="text-xs text-tertiary-light">Signed in as</p>
+            <p class="text-xs text-tertiary-light/80">Signed in as</p>
             <p class="text-sm font-semibold text-primary wrap-break-word"><%= currentUser.username %></p>
           </div>
 
@@ -71,8 +71,8 @@
           <%- icons.CircleUserRound || '' %>
         </button>
 
-        <div class="absolute right-0 top-full hidden group-hover:block w-48 bg-neutral-dark border border-neutral-700 rounded-md shadow-lg py-1 z-50">
-          <div class="px-4 py-2 mb-1 text-xs font-semibold uppercase tracking-wider text-tertiary-light/60 border-b border-neutral-800">
+        <div class="absolute right-0 top-full hidden group-hover:block w-48 border border-neutral-700 rounded-md shadow-lg py-1 z-50">
+          <div class="px-4 py-2 mb-1 text-xs font-semibold uppercase tracking-wider text-tertiary-light/80 border-b border-neutral-800">
             Guest
           </div>
 
