@@ -15,7 +15,7 @@
   <script src="/scripts/app.min.js" defer></script>
 </head>
 
-<body class="bg-neutral-dark antialiased m-5">
+<body class="bg-neutral-dark antialiased m-5" hx-indicator="#app-spinner">
   <header>
     <nav class="flex justify-between items-center relative">
       <% 
@@ -63,10 +63,14 @@
       <% } %>
     </nav>
   </header>
-
+  <div id="app-spinner" class="htmx-indicator fixed inset-x-0 bottom-0 top-14 bg-neutral-dark/60 backdrop-blur-[1px] flex flex-col items-center justify-center z-40 transition-opacity">
+    <div class="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full shadow-lg"></div>
+    <span class="mt-3 text-xs font-semibold uppercase tracking-wider text-tertiary-light">Loading...</span>
+  </div>
   <main id="app">
     <%- body %>
   </main>
+
 </body>
 
 </html>

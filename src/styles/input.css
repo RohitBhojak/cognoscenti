@@ -15,3 +15,35 @@
   --font-sans: 'Manrope', sans-serif;
   --font-serif: 'Newsreader', serif;
 }
+
+/* Global indicator in base layout */
+#app-spinner.htmx-indicator {
+  display: none;
+  opacity: 0;
+}
+
+.htmx-request#app-spinner,
+.htmx-request #app-spinner {
+  display: flex;
+  animation: delaySpinner 200ms linear forwards;
+}
+
+@keyframes delaySpinner {
+  0%,
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Local inline indicators (spinners inside inputs or buttons) */
+.htmx-indicator:not(#app-spinner) {
+  display: none;
+}
+
+.htmx-request .htmx-indicator:not(#app-spinner),
+.htmx-request.htmx-indicator:not(#app-spinner) {
+  display: inline-block;
+}
