@@ -1,3 +1,4 @@
+<title>Login</title>
 <form id="login" hx-post="/auth/login" hx-swap="outerHTML" hx-indicator="#login-btn-spinner" class="flex flex-col gap-8 max-w-xl bg-neutral mt-25 mx-auto p-10 rounded-lg">
   <h1 class="uppercase text-2xl font-serif text-tertiary-light mx-auto font-bold">login</h1>
   <%- include("../components/inputText", {id: "username", label: "username", required: true}) %>

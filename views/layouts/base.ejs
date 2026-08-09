@@ -38,7 +38,7 @@
       <div class="flex items-center gap-3">
         <%- include("../components/hamburgerMenu", {icon: icons.Menu, iconColor: "text-primary", heading:"Navigation", position: "left", links: navLinks, hide: "md:hidden"}) %>
 
-        <a href="/" hx-get="/" hx-target="#app" hx-swap="innerHTML" class="text-primary font-serif font-bold text-lg uppercase">
+        <a href="/" hx-get="/" hx-target="#app" hx-swap="innerHTML" hx-push-url="true" class="text-primary font-serif font-bold text-lg uppercase">
           Cognoscenti
         </a>
       </div>
