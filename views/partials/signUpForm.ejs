@@ -1,9 +1,9 @@
-<form id="sign-up" data-validate-inline="true" hx-post="/auth/sign-up" hx-swap="outerHTML" class="flex flex-col gap-8 max-w-xl bg-neutral mt-25 mx-auto p-10 rounded-lg">
+<form id="sign-up" data-validate-inline="true" hx-post="/auth/sign-up" hx-swap="outerHTML" hx-indicator="#sign-up-btn-spinner" class="flex flex-col gap-8 max-w-xl bg-neutral mt-25 mx-auto p-10 rounded-lg">
   <h1 class="uppercase text-2xl font-serif text-tertiary-light mx-auto font-bold">create account</h1>
   <%- include("../components/inputText", {id: "username", label: "username", required: true, validateUrl: "/auth/validate/username"}) %>
   <%- include("../components/inputText", {id: "password", label: "password", required: true, type: "password", validateUrl: "/auth/validate/password"}) %>
   <%- include("../components/inputText", {id: "adminSecretKey", label: "admin secret key", type: "password", validateUrl: "/auth/validate/adminSecretKey"}) %>
-  <%- include("../components/buttonPrimary", {label: "Sign Up", type: "submit", disabled: true})%>
+  <%- include("../components/buttonPrimary", {label: "Sign Up", type: "submit", disabled: true, id: "sign-up-btn"})%>
   <hr class="text-secondary" />
-  <p class="text-tertiary-light mx-auto">Already have an account? <a href="/auth/login" hx-get="/auth/login" hx-target="#app" hx-swap="innerHTML" hx-push-url="true" class="text-primary hover:text-primary-light">Login</a></p>
+  <p class="text-tertiary-light mx-auto">Already have an account? <a href="/auth/login" hx-get="/auth/login" hx-target="#app" hx-swap="innerHTML" hx-push-url="true" hx-indicator="#app-spinner" class="text-primary hover:text-primary-light">Login</a></p>
 </form>
