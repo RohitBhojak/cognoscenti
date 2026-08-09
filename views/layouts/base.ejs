@@ -17,17 +17,34 @@
 
 <body class="bg-neutral-dark antialiased m-5">
   <header>
-    <nav class="flex justify-between items-center">
-      <a href="/" hx-get="/" hx-target="#app" hx-swap="innerHTML" class="text-primary font-serif font-bold text-lg uppercase">Cognoscenti</a>
-
-      <ul id="nav-list" class="flex text-tertiary-light gap-4">
-        <% 
+    <nav class="flex justify-between items-center relative">
+      <% 
       const navLinks = [
-        { name: "archive", path: "/" },
-        { name: "genres", path: "/genres" },
-        { name: "submit", path: "/submit" }
+        { name: "Archive", path: "/" },
+        { name: "Genres", path: "/genres" },
+        { name: "Submit", path: "/submit" }
       ];
-      %>
+
+      const profileLinks = [
+        {name: "My Archive", path: "/my-archive", icon: icons.Bookmark},
+        {name: "Logout", path: "/auth/logout", method: "post", icon: icons.LogOut}
+      ]
+
+      const guestLinks = [
+        {name: "Login", path: "/auth/login", icon: icons.LogIn},
+        {name: "Create Account", path: "/auth/sign-up", icon: icons.UserPlus}
+      ]
+    %>
+      <div class="flex items-center gap-3">
+        <%- include("../components/hamburgerMenu", {icon: icons.Menu, iconColor: "text-primary", heading:"Navigation", position: "left", links: navLinks, hide: "md:hidden"}) %>
+
+        <a href="/" hx-get="/" hx-target="#app" hx-swap="innerHTML" class="text-primary font-serif font-bold text-lg uppercase">
+          Cognoscenti
+        </a>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <ul id="nav-list" class="hidden md:flex text-tertiary-light gap-4">
         <% for (const link of navLinks) { %>
         <li>
           <a href="<%= link.path %>" hx-get="<%= link.path %>" hx-target="#app" hx-swap="innerHTML" hx-push-url="true" class="hover:text-primary transition-all capitalize font-serif py-1">
@@ -37,55 +54,13 @@
         <% } %>
       </ul>
 
-      <div class="relative group">
-        <% if (locals.currentUser) { %>
-        <button type="button" aria-label="User Account" class="text-primary hover:text-primary-light transition-colors flex items-center focus:outline-none cursor-pointer [&>svg]:w-7 [&>svg]:h-7">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 absolute right-8"></span>
-          <%- icons.CircleUserRound %>
-        </button>
-
-        <div class="absolute right-0 top-full hidden group-hover:block w-52 border border-neutral-700 rounded-md shadow-lg py-1 z-50 bg-neutral">
-          <div class="px-4 py-2 mb-1 border-b border-neutral-800">
-            <p class="text-xs text-tertiary-light/80">Signed in as</p>
-            <p class="text-sm font-semibold text-primary wrap-break-word"><%= currentUser.username %></p>
-          </div>
-
-          <a href="/my-archive" hx-get="/my-archive" hx-target="#app" hx-push-url="true" class="flex items-center gap-2 px-4 py-2 text-sm text-tertiary-light hover:text-primary hover:bg-neutral-800 transition-colors">
-            <%- icons.Bookmark || '' %>
-            <span>My Archive</span>
-          </a>
-
-          <div class="border-t border-neutral-700 my-1"></div>
-
-          <button hx-post="/auth/logout" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-error hover:bg-neutral-800 transition-colors cursor-pointer">
-            <%- icons.LogOut || '' %>
-            <span>Log Out</span>
-          </button>
-        </div>
-        <% } else { %>
-        <button type="button" aria-label="Guest Account" class="text-tertiary-light hover:text-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer [&>svg]:w-7 [&>svg]:h-7">
-          <%- icons.CircleUserRound || '' %>
-        </button>
-
-        <div class="absolute right-0 top-full hidden group-hover:block w-48 border border-neutral-700 rounded-md shadow-lg py-1 z-50 bg-neutral text-tertiary-light">
-          <div class="px-4 py-2 mb-1 text-xs font-semibold uppercase tracking-wider text-tertiary-light/80 border-b border-neutral-800">
-            Guest
-          </div>
-
-          <a href="/auth/login" hx-get="/auth/login" hx-target="#app" hx-push-url="true" class="flex items-center gap-2 px-4 py-2 text-sm hover:text-primary hover:bg-neutral-800 transition-colors">
-            <%- icons.LogIn || '' %>
-            <span>Log In</span>
-          </a>
-
-          <div class="border-t border-neutral-800 my-1"></div>
-
-          <a href="/auth/sign-up" hx-get="/auth/sign-up" hx-target="#app" hx-push-url="true" class="flex items-center gap-2 px-4 py-2 text-sm hover:text-primary hover:bg-neutral-800 transition-colors font-medium">
-            <%- icons.UserPlus || '' %>
-            <span>Create Account</span>
-          </a>
-        </div>
-        <% } %>
-      </div>
+      <!-- Account Menus -->
+      <% if (locals.currentUser) { %>
+      <span class="w-2 h-2 rounded-full bg-emerald-500 absolute right-8"></span>
+      <%- include("../components/hamburgerMenu", {icon: icons.CircleUserRound, iconColor: "text-primary", heading:currentUser.username, position: "right", links: profileLinks, hide: ""}) %>
+      <% } else { %>
+      <%- include("../components/hamburgerMenu", {icon: icons.CircleUserRound, iconColor: "text-tertiary-light", heading:"Guest", position: "right", links: guestLinks, hide: ""}) %>
+      <% } %>
     </nav>
   </header>
 
