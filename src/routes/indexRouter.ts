@@ -1,11 +1,20 @@
 import { Router } from 'express';
-import { renderHomePage } from '../controllers/indexController.js';
 import authRouter from './authRouter.js';
+import archiveRouter from './archiveRouter.js';
+import genreRouter from './genreRouter.js';
+import submitRouter from './submitRouter.js';
+import collectionRouter from './collectionRouter.js';
 
 const indexRouter = Router();
 
 indexRouter.use('/auth', authRouter);
 
-indexRouter.get('/', renderHomePage);
+indexRouter.use('/genres', genreRouter);
+
+indexRouter.use('/submit', submitRouter);
+
+indexRouter.use('/collection', collectionRouter);
+
+indexRouter.use('/', archiveRouter);
 
 export default indexRouter;
