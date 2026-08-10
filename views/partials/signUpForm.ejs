@@ -1,5 +1,5 @@
-<title>Sign Up</title>
-<form id="sign-up" data-validate-inline="true" hx-post="/auth/sign-up" hx-swap="outerHTML" hx-indicator="#sign-up-btn-spinner" class="flex flex-col gap-8 max-w-xl bg-neutral mt-25 mx-auto p-10 rounded-lg">
+<title><%= title %></title>
+<form id="sign-up" data-validate-inline="true" hx-post="/auth/sign-up" hx-swap="outerHTML" hx-indicator="#sign-up-btn-spinner" class="flex flex-col gap-8 max-w-xl bg-neutral mt-25 mx-auto p-10 rounded-lg shadow-md shadow-current">
   <h1 class="uppercase text-2xl font-serif text-tertiary-light mx-auto font-bold">create account</h1>
   <%- include("../components/inputText", {id: "username", label: "username", required: true, validateUrl: "/auth/validate/username"}) %>
   <%- include("../components/inputText", {id: "password", label: "password", required: true, type: "password", validateUrl: "/auth/validate/password"}) %>

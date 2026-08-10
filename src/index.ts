@@ -8,6 +8,7 @@ import passport from 'passport';
 import { configurePassport } from './config/passport.js';
 import redirectMiddleware from './middlewares/redirect.js';
 import setUser from './middlewares/setUser.js';
+import errorHandler from './middlewares/errorHandler.js';
 
 const app = express();
 const PORT = process.env.PORT || '3000';
@@ -31,6 +32,8 @@ app.use(renderViewMiddleware);
 app.use(redirectMiddleware);
 
 app.use('/', indexRouter);
+
+app.use(errorHandler);
 
 app.listen(PORT, (err) => {
   if (err) throw err;
