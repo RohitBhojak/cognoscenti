@@ -1,3 +1,4 @@
+<%# id, type, disabled, label, spinner %>
 <button id="<%= id %>" type="<%= locals.type || 'button' %>" <% if (locals.disabled) { %> disabled <% } %> class="bg-primary hover:bg-primary-light disabled:hover:bg-primary disabled:hover:tracking-wider disabled:opacity-50 disabled:cursor-not-allowed rounded-md p-2 cursor-pointer uppercase transition-all tracking-wider hover:tracking-[0.2rem] font-bold duration-300 flex gap-1 items-center justify-center">
   <%= label %>
   <% if (locals.spinner) { %>
