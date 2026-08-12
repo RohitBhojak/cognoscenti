@@ -5,6 +5,7 @@ import genreRouter from './genreRouter.js';
 import submitRouter from './submitRouter.js';
 import collectionRouter from './collectionRouter.js';
 import { NotFoundError } from '../errors/AppError.js';
+import optionsRouter from './optionsRouter.js';
 
 const indexRouter = Router();
 
@@ -15,6 +16,8 @@ indexRouter.use('/genres', genreRouter);
 indexRouter.use('/submit', submitRouter);
 
 indexRouter.use('/collection', collectionRouter);
+
+indexRouter.use('/options', optionsRouter);
 
 indexRouter.use('/', archiveRouter);
 
