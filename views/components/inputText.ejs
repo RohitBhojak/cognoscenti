@@ -1,15 +1,17 @@
-<%# id, required, type, validateUrl, values: {id}, errors: {id: {msg}} %>
+<%# id, label, required, type, datalistUrl, validateUrl, values: {id}, errors: {id: {msg}} %>
 <% 
-  // Calculate right padding and icon offsets dynamically
   const hasPasswordToggle = locals.type === "password";
   const hasValidation = Boolean(locals.validateUrl);
+  const hasDatalist = Boolean(locals.datalistUrl);
+  const datalistId = hasDatalist ? `${locals.id}-options` : null;
 
+  // Calculate right padding and icon offsets dynamically
   let inputPaddingRight = "pr-2"; 
   let spinnerPosition = "right-0";
 
   if (hasPasswordToggle && hasValidation) {
     inputPaddingRight = "pr-14"; 
-    spinnerPosition = "right-7";  // Shift spinner to the left of the eye icon
+    spinnerPosition = "right-7"; 
   } else if (hasPasswordToggle || hasValidation) {
     inputPaddingRight = "pr-8";
     spinnerPosition = "right-0";
@@ -17,11 +19,19 @@
 %>
 
 <div class="flex flex-col gap-1">
-  <label for="<%= id %>" class="uppercase text-primary tracking-widest"><%= label %> <%= locals.required ? '*' : '' %></label>
-  <div class="input-container relative flex items-center">
-    <input name="<%= id %>" id="<%= id %>" placeholder="Enter <%= label %>" type="<%= locals.type || "text"%>" value="<%= locals.values?.[id]%>" <% if (locals.required) { %> required <% } %> class="w-full text-tertiary-light font-serif py-2 border-b focus:outline-none border-b-tertiary focus:border-b-primary transition-colors duration-300 <%= inputPaddingRight %>" <% if(hasValidation) {%> hx-post="<%- validateUrl %>" hx-trigger="keyup changed delay:400, blur" hx-target="#<%= id %>-error" hx-swap="innerHTML" hx-params="<%= id %>" hx-indicator="#<%= id %>-spinner" <% } %> />
+  <label for="<%= id %>" class="uppercase text-primary tracking-widest">
+    <%= label %> <%= locals.required ? '*' : '' %>
+  </label>
 
-    <% if(hasValidation) { %>
+  <div class="input-container relative flex items-center">
+    <input name="<%= id %>" id="<%= id %>" placeholder="Enter <%= label %>" type="<%= locals.type || 'text' %>" value="<%= locals.values?.[id] %>" <% if (hasDatalist) { %> list="<%= datalistId %>" <% } %> <% if (locals.required) { %> required <% } %> class="w-full text-tertiary-light font-serif py-2 border-b focus:outline-none border-b-tertiary focus:border-b-primary transition-colors duration-300 <%= inputPaddingRight %>" <%# HTMX Dynamic Options Fetch (Datalist) %> <% if (hasDatalist) { %> hx-get="<%- datalistUrl %>" hx-trigger="focus once" hx-target="#<%= datalistId %>" <% } %> <%# HTMX Inline Field Validation %> <% if (hasValidation) { %> hx-post="<%- validateUrl %>" hx-trigger="keyup changed delay:400, blur" hx-target="#<%= id %>-error" hx-swap="innerHTML" hx-params="<%= id %>" hx-indicator="#<%= id %>-spinner" <% } %> />
+
+    <%# Render empty datalist container if datalistUrl is passed %>
+    <% if (hasDatalist) { %>
+    <datalist id="<%= datalistId %>"></datalist>
+    <% } %>
+
+    <% if (hasValidation) { %>
     <%- include("./spinner", {color: "border-primary", position: `absolute ${spinnerPosition}`}) %>
     <% } %>
 
@@ -32,5 +42,8 @@
     </button>
     <% } %>
   </div>
-  <div id="<%= id %>-error" data-error><%- include("./formError", {error: locals.errors?.[id]?.msg}) %></div>
+
+  <div id="<%= id %>-error" data-error>
+    <%- include("./formError", {error: locals.errors?.[id]?.msg}) %>
+  </div>
 </div>
