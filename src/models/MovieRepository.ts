@@ -13,3 +13,10 @@ export const getMovieById = async (id: number): Promise<Movie | null> => {
   const { rows } = await pool.query<Movie>('SELECT * FROM movies WHERE id = $1', [id]);
   return rows[0] ?? null;
 };
+
+export const getAllDirectors = async () => {
+  const { rows } = await pool.query<Pick<Movie, 'director'>>(
+    'SELECT DISTINCT director FROM movies ORDER BY director ASC'
+  );
+  return rows;
+};

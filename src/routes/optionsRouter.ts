@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { getGenreOptions } from '../controllers/optionsController.js';
+import { getDirectorOptions, getGenreOptions } from '../controllers/optionsController.js';
 
 const optionsRouter = Router();
 
 optionsRouter.get('/genres', getGenreOptions);
+
+optionsRouter.get('/directors', getDirectorOptions);
 
 export default optionsRouter;

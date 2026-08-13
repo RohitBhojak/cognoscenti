@@ -1,6 +1,6 @@
 <form id="search" hx-get="" hx-indicator="" class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-x-6 gap-y-2 items-end bg-neutral mt-10 mx-auto p-5 rounded-md shadow-md shadow-current text-sm">
   <%- include("../components/inputText", {id: "title", label: "Title"}) %>
-  <%- include("../components/inputText", {id: "director", label: "Director"}) %>
+  <%- include("../components/inputText", {id: "director", label: "Director", datalistUrl: "/options/directors"}) %>
   <%- include("../components/inputText", {id: "year", label: "Year Of Release", type: "number"}) %>
   <%- include("../components/inputText", {id: "genre", label: "Genre", datalistUrl: "/options/genres"}) %>
   <%- include("../components/buttonPrimary", {id: "search-btn", type: "submit", label:"Apply Filters", spinner: "true"}) %>
