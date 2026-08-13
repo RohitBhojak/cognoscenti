@@ -4,12 +4,9 @@ import { getAllGenres } from '../models/GenreRepository.js';
 export const getGenreOptions = async (req: Request, res: Response) => {
   try {
     const genres = await getAllGenres();
-    const optionsHtml = genres
-      .map((genre) => `<option value="${genre.name}">${genre.name}</option>`)
-      .join('');
-
-    res.send(optionsHtml);
+    const options = genres.map((genre) => genre.name);
+    return res.renderView('components/options', { options });
   } catch {
-    return res.status(500).send('<option value="">Error loading genres</option>');
+    return res.status(500).render('components/options', { options: [] });
   }
 };
