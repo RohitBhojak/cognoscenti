@@ -1,0 +1,14 @@
+<%# item {title, image, year, director} %>
+<div>
+  <div class="overflow-hidden rounded-lg w-50">
+    <img src="<%= item.image || '/assets/cinema.webp'%>" class="aspect-2/3 object-cover grayscale hover:grayscale-0 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer" />
+  </div>
+
+  <div>
+    <span class="font-serif text-tertiary-light"><%= item.title %></span>
+    <div>
+      <span class="font-sans text-primary-light"><%= item.year %></span>
+      <span class="font-sans italic capitalize text-primary"><%= item.director %></span>
+    </div>
+  </div>
+</div>
