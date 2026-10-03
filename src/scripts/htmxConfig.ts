@@ -13,3 +13,18 @@ document.body.addEventListener('htmx:beforeSwap', (event: Event) => {
     customEvent.detail.isError = false;
   }
 });
+
+document.body.addEventListener('htmx:configRequest', (event: Event) => {
+  const customEvent = event as CustomEvent<{
+    elt: HTMLElement;
+    parameters: Record<string, string | string[]>;
+  }>;
+
+  if (customEvent.detail.elt.id !== 'search') return;
+
+  for (const [name, value] of Object.entries(customEvent.detail.parameters)) {
+    if (value === '') {
+      delete customEvent.detail.parameters[name];
+    }
+  }
+});
