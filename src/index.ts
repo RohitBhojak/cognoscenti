@@ -3,16 +3,15 @@ import path from 'node:path';
 import indexRouter from './routes/indexRouter.js';
 import * as icons from 'lucide-static';
 import renderViewMiddleware from './middlewares/renderView.js';
-import session from 'express-session';
 import passport from 'passport';
 import { configurePassport } from './config/passport.js';
 import redirectMiddleware from './middlewares/redirect.js';
 import setUser from './middlewares/setUser.js';
 import errorHandler from './middlewares/errorHandler.js';
+import sessionMiddleware from './config/session.js';
 
 const app = express();
 const PORT = process.env.PORT || '3000';
-const secret = process.env.SESSION_SECRET || 'session_secret_key';
 
 app.set('views', path.join(process.cwd(), 'views'));
 app.set('view engine', 'ejs');
@@ -22,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 configurePassport();
 
-app.use(session({ secret, resave: false, saveUninitialized: false }));
+app.use(sessionMiddleware);
 app.use(passport.session());
 
 app.locals.icons = icons;

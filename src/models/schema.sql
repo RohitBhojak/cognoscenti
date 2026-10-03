@@ -76,3 +76,15 @@ CREATE INDEX IF NOT EXISTS idx_users_movies_movie_id ON users_movies(movie_id);
 -- Foreign key indexes for author tracking queries
 CREATE INDEX IF NOT EXISTS idx_genres_created_by ON genres(created_by);
 CREATE INDEX IF NOT EXISTS idx_movies_created_by ON movies(created_by);
+
+-- SESSION TABLE FROM CONNECT-PG-SIMPLE LIBRARY
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+  "sess" json NOT NULL,
+  "expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+CREATE INDEX "IDX_session_expire" ON "session" ("expire");

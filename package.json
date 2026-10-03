@@ -40,6 +40,7 @@
     "@tailwindcss/cli": "^4.3.3",
     "bcrypt": "^6.0.0",
     "concurrently": "^10.0.4",
+    "connect-pg-simple": "^10.0.0",
     "ejs": "^5.0.2",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
@@ -53,6 +54,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/bcrypt": "^6.0.0",
+    "@types/connect-pg-simple": "^7.0.3",
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
     "@types/node": "^26.1.1",
