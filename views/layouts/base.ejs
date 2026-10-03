@@ -56,7 +56,6 @@
 
       <!-- Account Menus -->
       <% if (locals.currentUser) { %>
-      <span class="w-2 h-2 rounded-full bg-emerald-500 absolute right-8"></span>
       <%- include("../components/hamburgerMenu", {icon: icons.CircleUserRound, iconColor: "text-primary", heading:currentUser.username, position: "right", links: profileLinks, hide: ""}) %>
       <% } else { %>
       <%- include("../components/hamburgerMenu", {icon: icons.CircleUserRound, iconColor: "text-tertiary-light", heading:"Guest", position: "right", links: guestLinks, hide: ""}) %>
