@@ -1,12 +1,72 @@
 import { Movie } from '../types/database.js';
 import pool from './pool.js';
 
-export const getAllMoviesPaginated = async (page: number = 0, size: number = 10) => {
-  const { rows } = await pool.query<Movie>('SELECT * FROM movies ORDER BY id OFFSET $1 LIMIT $2', [
-    page * size,
-    size,
-  ]);
-  return rows;
+type MovieFilters = {
+  title?: string;
+  genre?: string;
+  director?: string;
+  year?: number;
+};
+
+export const getMoviesPaginated = async (page = 0, size = 10, filters: MovieFilters = {}) => {
+  const conditions: string[] = [];
+  const values: Array<string | number> = [];
+
+  const addValue = (value: string | number) => {
+    values.push(value);
+    return `$${values.length}`;
+  };
+
+  if (filters.title) {
+    const param = addValue(`%${filters.title}%`);
+    conditions.push(`m.title ILIKE ${param}`);
+  }
+
+  if (filters.director) {
+    const param = addValue(`%${filters.director}%`);
+    conditions.push(`m.director ILIKE ${param}`);
+  }
+
+  if (filters.year !== undefined) {
+    const param = addValue(filters.year);
+    conditions.push(`m.release_year = ${param}`);
+  }
+
+  if (filters.genre) {
+    const param = addValue(`%${filters.genre}%`);
+
+    conditions.push(`
+        EXISTS (
+          SELECT 1
+          FROM movies_genres mg
+          JOIN genres g ON g.id = mg.genre_id
+          WHERE mg.movie_id = m.id
+            AND g.name ILIKE ${param}
+        )
+      `);
+  }
+
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+
+  const offset = addValue(page * size);
+  const limit = addValue(size + 1);
+
+  const { rows } = await pool.query<Movie>(
+    `
+        SELECT m.*
+        FROM movies m
+        ${where}
+        ORDER BY m.id ASC
+        OFFSET ${offset}
+        LIMIT ${limit}
+      `,
+    values
+  );
+
+  return {
+    list: rows.slice(0, size),
+    hasMore: rows.length > size,
+  };
 };
 
 export const getMovieById = async (id: number): Promise<Movie | null> => {

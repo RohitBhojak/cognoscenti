@@ -1,3 +1,5 @@
 <title><%= title %></title>
 <%- include("../partials/archiveFilters") %>
-<%- include("../partials/archiveList") %>
+<div id="archive-list" class="mt-8 grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-y-8 gap-x-8" hx-disinherit="hx-indicator">
+  <%- include("../partials/archiveList") %>
+</div>
