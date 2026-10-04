@@ -1,7 +1,9 @@
 <%# item {title, poster_url, release_year, director} %>
-<div>
+<div class="group block cursor-pointer [content-visibility:auto] [contain-intrinsic-size:auto_28rem]" data-center-focus>
   <div class="overflow-hidden rounded-md shadow-xl shadow-neutral-light">
-    <img src="<%= item.poster_url || '/assets/cinema.webp'%>" class="aspect-2/3 object-cover grayscale hover:grayscale-0 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer" />
+    <img src="<%= item.poster_url || '/assets/cinema.webp'%>" class="aspect-2/3 object-cover w-full grayscale transition-all duration-500 ease-in-out
+             group-[.is-active]:grayscale-0 group-[.is-active]:scale-110
+             [@media(hover:hover)]:group-hover:grayscale-0 [@media(hover:hover)]:group-hover:scale-110" />
   </div>
 
   <div class="mt-2">
