@@ -1,13 +1,13 @@
-<%# item {title, image, year, director} %>
+<%# item {title, poster_url, release_year, director} %>
 <div>
   <div class="overflow-hidden rounded-md shadow-xl shadow-neutral-light">
-    <img src="<%= item.image || '/assets/cinema.webp'%>" class="aspect-2/3 object-cover grayscale hover:grayscale-0 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer" />
+    <img src="<%= item.poster_url || '/assets/cinema.webp'%>" class="aspect-2/3 object-cover grayscale hover:grayscale-0 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer" />
   </div>
 
-  <div class="mt-1">
+  <div class="mt-2">
     <span class="font-serif text-xl text-tertiary-light"><%= item.title %></span>
     <div class="flex items-center gap-2">
-      <span class="font-sans text-primary-light"><%= item.year %></span>
+      <span class="font-sans text-primary-light"><%= item.release_year %></span>
       <span class="w-1.5 h-1.5 rounded-full bg-tertiary inline-block"></span>
       <span class="font-sans italic capitalize text-primary"><%= item.director %></span>
     </div>
