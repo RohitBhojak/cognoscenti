@@ -4,7 +4,7 @@
 <% }) %>
 
 <% if (hasMore) { %>
-<div id="archive-next-batch" class="col-span-full flex justify-center py-8" hx-get="/" hx-vals='{"page": <%= nextPage %>}' hx-include="#search" hx-trigger="intersect once" hx-swap="outerHTML" aria-live="polite">
+<div id="archive-next-batch" class="col-span-full flex justify-center py-8" hx-get="/archive" hx-vals='{"page": <%= nextPage %>}' hx-include="#search" hx-trigger="intersect once" hx-swap="outerHTML" aria-live="polite">
   <div class="flex items-center gap-3 text-sm text-tertiary-light">
     <span class="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent"></span>
     <span>Loading more...</span>

@@ -1,9 +1,15 @@
 import { Router } from 'express';
-import { renderArchiveDetail, renderHomePage } from '../controllers/archiveController.js';
+import {
+  renderArchiveDetail,
+  renderArchiveList,
+  renderHomePage,
+} from '../controllers/archiveController.js';
 
 const archiveRouter = Router();
 
 archiveRouter.get('/', renderHomePage);
+
+archiveRouter.get('/archive', renderArchiveList);
 
 archiveRouter.get('/archive/:id', renderArchiveDetail);
 

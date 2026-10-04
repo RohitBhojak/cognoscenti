@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getMoviesPaginated } from '../models/MovieRepository.js';
 
-export const renderHomePage = async (req: Request, res: Response) => {
+const getArchiveData = async (req: Request) => {
   const page = Number(req.query.page ?? 0);
   const size = 10;
   const filters = {
@@ -13,20 +13,21 @@ export const renderHomePage = async (req: Request, res: Response) => {
 
   const { list, hasMore } = await getMoviesPaginated(page, size, filters);
 
-  if (req.get('HX-Request')) {
-    return res.render('partials/archiveList', {
-      list,
-      nextPage: page + 1,
-      hasMore,
-    });
-  }
+  return { list, nextPage: page + 1, hasMore };
+};
+
+export const renderHomePage = async (req: Request, res: Response) => {
+  const archiveData = await getArchiveData(req);
 
   return res.renderView('pages/archive', {
     title: 'Archive',
-    list,
-    nextPage: 1,
-    hasMore,
+    ...archiveData,
   });
+};
+
+export const renderArchiveList = async (req: Request, res: Response) => {
+  const archiveData = await getArchiveData(req);
+  return res.render('partials/archiveList', archiveData);
 };
 
 export const renderArchiveDetail = () => {};
