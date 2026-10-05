@@ -28,7 +28,7 @@ const getArchiveData = async (req: Request) => {
 
   const { list, hasMore } = await getMoviesPaginated(page, size, filters);
 
-  return { list, nextPage: page + 1, hasMore };
+  return { list, nextPage: page + 1, hasMore, values: filters };
 };
 
 export const renderHomePage = async (req: Request, res: Response) => {
