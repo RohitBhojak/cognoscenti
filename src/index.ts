@@ -1,4 +1,5 @@
 import express from 'express';
+import compression from 'compression';
 import path from 'node:path';
 import indexRouter from './routes/indexRouter.js';
 import * as icons from 'lucide-static';
@@ -10,8 +11,10 @@ import setUser from './middlewares/setUser.js';
 import errorHandler from './middlewares/errorHandler.js';
 import sessionMiddleware from './config/session.js';
 
-const app = express();
 const PORT = process.env.PORT || '3000';
+
+const app = express();
+app.use(compression());
 
 app.set('views', path.join(process.cwd(), 'views'));
 app.set('view engine', 'ejs');
