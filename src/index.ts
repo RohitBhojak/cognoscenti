@@ -14,11 +14,12 @@ import sessionMiddleware from './config/session.js';
 const PORT = process.env.PORT || '3000';
 
 const app = express();
-app.use(compression());
 
+app.set('trust proxy', 1);
 app.set('views', path.join(process.cwd(), 'views'));
 app.set('view engine', 'ejs');
 
+app.use(compression());
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.urlencoded({ extended: true }));
 
