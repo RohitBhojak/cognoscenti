@@ -16,6 +16,7 @@ import {
   logout,
 } from '../controllers/authController.js';
 import { preventCache, requireGuest } from '../middlewares/accessGuard.js';
+import passport from 'passport';
 
 const authRouter = Router();
 
@@ -41,6 +42,13 @@ authRouter.post(
   loginValidators,
   handleValidationErrors({ pageView: 'pages/login' }),
   login
+);
+
+authRouter.get('/google', passport.authenticate('google'));
+
+authRouter.get(
+  '/google/redirect',
+  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' })
 );
 
 authRouter.post('/logout', logout);

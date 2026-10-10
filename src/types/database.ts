@@ -1,12 +1,22 @@
 export interface User {
   id: number;
   username: string;
-  password: string;
+  password: string | null;
   is_admin: boolean;
   created_at: string;
 }
 
 export type CreateUserInput = Omit<User, 'id' | 'created_at'>;
+
+export interface FederatedCredential {
+  id: number;
+  user_id: number;
+  provider: string;
+  subject: string;
+  created_at: string;
+}
+
+export type CreateFederatedCredential = Omit<FederatedCredential, 'id' | 'created_at'>;
 
 export interface Movie {
   id: number;

@@ -11,7 +11,7 @@ export const getUserByUsername = async (username: string): Promise<User | null> 
   return rows[0] ?? null;
 };
 
-export const insertUser = async (input: CreateUserInput): Promise<User> => {
+export const insertUser = async (input: CreateUserInput) => {
   const { rows } = await pool.query<User>(
     'INSERT INTO users (username, password, is_admin) VALUES ($1, $2, $3) RETURNING *',
     [input.username, input.password, input.is_admin]

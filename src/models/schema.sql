@@ -2,12 +2,22 @@
 CREATE TABLE IF NOT EXISTS users (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   username TEXT NOT NULL,
-  password TEXT NOT NULL,
+  password TEXT,
   is_admin BOOLEAN DEFAULT false,
   created_at timestamptz DEFAULT NOW(),
 
   CONSTRAINT uq_users_username UNIQUE (username),
   CONSTRAINT chk_users_username_length CHECK (length(username) BETWEEN 3 AND 30)
+);
+
+CREATE TABLE IF NOT EXISTS federated_credentials (
+  id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  provider TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  created_at timestamptz DEFAULT NOW(),
+
+  CONSTRAINT uq_federated_credentials_provider_subject UNIQUE (provider, subject)
 );
 
 -- GENRES TABLE
@@ -68,6 +78,10 @@ CREATE TABLE IF NOT EXISTS users_movies (
   created_at timestamptz DEFAULT NOW(),
   PRIMARY KEY (user_id, movie_id)
 );
+
+-- Index for speedy lookups on login
+CREATE INDEX IF NOT EXISTS idx_federated_credentials_user_id 
+  ON federated_credentials(user_id);
 
 -- Reverse lookup indexes for junction tables
 CREATE INDEX IF NOT EXISTS idx_movies_genres_genre_id ON movies_genres(genre_id);
