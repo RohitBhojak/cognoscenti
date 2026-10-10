@@ -18,21 +18,21 @@ ON CONFLICT (name) DO NOTHING;
 
 
 -- 3. SEED MOVIES
-INSERT INTO movies (title, pitch, poster_url, release_year, runtime, director, starring) VALUES 
-('About Time', 'A young man discovers he can travel back in time to change his own life.', 'https://example.com/about_time.jpg', 2013, 123, 'Richard Curtis', 'Domhnall Gleeson, Rachel McAdams'),
-('A Silent Voice', 'A former bully tries to make amends with a deaf girl he tormented in elementary school.', 'https://example.com/silent_voice.jpg', 2016, 130, 'Naoko Yamada', 'Miyu Irino, Saori Hayami'),
-('Your Name', 'Two strangers find themselves linked in a bizarre way when they wake up in each others bodies.', 'https://example.com/your_name.jpg', 2016, 106, 'Makoto Shinkai', 'Ryunosuke Kamiki, Mone Kamishirakeishi'),
-('The Wind Rises', 'A look at the life of Jiro Horikoshi, the man who designed Japanese fighter planes during WWII.', 'https://example.com/wind_rises.jpg', 2013, 126, 'Hayao Miyazaki', 'Hideaki Anno, Miori Takimoto'),
-('The Prestige', 'After a tragic accident, two stage magicians in 1890s London engage in a battle to create the ultimate illusion.', 'https://example.com/prestige.jpg', 2006, 130, 'Christopher Nolan', 'Christian Bale, Hugh Jackman'),
-('Grave of the Fireflies', 'A devastating story of two siblings struggling to survive in Japan during World War II.', 'https://example.com/grave_fireflies.jpg', 1988, 89, 'Isao Takahata', 'Tsutomu Tatsumi, Ayano Shiraishi'),
-('Interstellar', 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity''s survival.', 'https://example.com/interstellar.jpg', 2014, 169, 'Christopher Nolan', 'Matthew McConaughey, Anne Hathaway'),
-('The Shining', 'A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.', 'https://example.com/shining.jpg', 1980, 146, 'Stanley Kubrick', 'Jack Nicholson, Shelley Duvall'),
-('Inception', 'A thief who steals corporate secrets through dream-sharing technology is given the inverse task.', 'https://example.com/inception.jpg', 2010, 148, 'Christopher Nolan', 'Leonardo DiCaprio, Joseph Gordon-Levitt'),
-('The Godfather', 'The aging patriarch of an organized crime dynasty transfers control to his reluctant son.', 'https://example.com/godfather.jpg', 1972, 175, 'Francis Ford Coppola', 'Marlon Brando, Al Pacino'),
-('John Wick', 'An ex-hit-man comes out of retirement to track down the gangsters that killed his dog.', 'https://example.com/john_wick.jpg', 2014, 101, 'Chad Stahelski', 'Keanu Reeves, Michael Nyqvist'),
-('Scent of a Woman', 'A prep school student agrees to "babysit" a blind, disgruntled retired Army Lieutenant Colonel.', 'https://example.com/scent_woman.jpg', 1992, 156, 'Martin Brest', 'Al Pacino, Chris O''Donnell'),
-('Prisoners', 'When Keller Dover''s daughter goes missing, he takes matters into his own hands.', 'https://example.com/prisoners.jpg', 2013, 153, 'Denis Villeneuve', 'Hugh Jackman, Jake Gyllenhaal'),
-('Manchester by the Sea', 'A depressed uncle is asked to take care of his teenage nephew after the boy''s father dies.', 'https://example.com/manchester.jpg', 2016, 137, 'Kenneth Lonergan', 'Casey Affleck, Michelle Williams')
+INSERT INTO movies (title, pitch, release_year, runtime, director, starring) VALUES 
+('About Time', 'A young man discovers he can travel back in time to change his own life.', 2013, 123, 'Richard Curtis', 'Domhnall Gleeson, Rachel McAdams'),
+('A Silent Voice', 'A former bully tries to make amends with a deaf girl he tormented in elementary school.', 2016, 130, 'Naoko Yamada', 'Miyu Irino, Saori Hayami'),
+('Your Name', 'Two strangers find themselves linked in a bizarre way when they wake up in each others bodies.', 2016, 106, 'Makoto Shinkai', 'Ryunosuke Kamiki, Mone Kamishirakeishi'),
+('The Wind Rises', 'A look at the life of Jiro Horikoshi, the man who designed Japanese fighter planes during WWII.', 2013, 126, 'Hayao Miyazaki', 'Hideaki Anno, Miori Takimoto'),
+('The Prestige', 'After a tragic accident, two stage magicians in 1890s London engage in a battle to create the ultimate illusion.', 2006, 130, 'Christopher Nolan', 'Christian Bale, Hugh Jackman'),
+('Grave of the Fireflies', 'A devastating story of two siblings struggling to survive in Japan during World War II.', 1988, 89, 'Isao Takahata', 'Tsutomu Tatsumi, Ayano Shiraishi'),
+('Interstellar', 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity''s survival.', 2014, 169, 'Christopher Nolan', 'Matthew McConaughey, Anne Hathaway'),
+('The Shining', 'A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.', 1980, 146, 'Stanley Kubrick', 'Jack Nicholson, Shelley Duvall'),
+('Inception', 'A thief who steals corporate secrets through dream-sharing technology is given the inverse task.', 2010, 148, 'Christopher Nolan', 'Leonardo DiCaprio, Joseph Gordon-Levitt'),
+('The Godfather', 'The aging patriarch of an organized crime dynasty transfers control to his reluctant son.', 1972, 175, 'Francis Ford Coppola', 'Marlon Brando, Al Pacino'),
+('John Wick', 'An ex-hit-man comes out of retirement to track down the gangsters that killed his dog.', 2014, 101, 'Chad Stahelski', 'Keanu Reeves, Michael Nyqvist'),
+('Scent of a Woman', 'A prep school student agrees to "babysit" a blind, disgruntled retired Army Lieutenant Colonel.', 1992, 156, 'Martin Brest', 'Al Pacino, Chris O''Donnell'),
+('Prisoners', 'When Keller Dover''s daughter goes missing, he takes matters into his own hands.', 2013, 153, 'Denis Villeneuve', 'Hugh Jackman, Jake Gyllenhaal'),
+('Manchester by the Sea', 'A depressed uncle is asked to take care of his teenage nephew after the boy''s father dies.', 2016, 137, 'Kenneth Lonergan', 'Casey Affleck, Michelle Williams')
 ON CONFLICT (title) DO NOTHING;
 
 
