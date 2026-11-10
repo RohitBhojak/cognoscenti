@@ -1,0 +1,17 @@
+<%# name %>
+<div class="p-6 relative bg-neutral-light border border-transparent hover:border-primary h-60 group rounded-md flex flex-col cursor-pointer overflow-hidden transition-colors duration-300">
+  <div class="flex text-primary items-baseline">
+    <!-- Initial big letter -->
+    <span class="text-4xl font-serif relative font-semibold"><%= name[0].toUpperCase() %></span>
+
+    <!-- Sliding first letter -->
+    <span class="text-lg relative -translate-x-2.5 translate-y-40 group-hover:translate-y-0 opacity-100 group-hover:opacity-0 font-semibold transform-gpu transition-all duration-300 ease-out"><%= name[0].toUpperCase() %></span>
+
+    <!-- Sliding rest of the name -->
+    <span class="text-lg relative -translate-x-2.5 translate-y-40 group-hover:translate-y-0 font-semibold transform-gpu transition-transform duration-300 ease-out"><%= name.substring(1) %></span>
+  </div>
+
+  <p class="text-sm text-secondary-light translate-y-40 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transform-gpu transition-all duration-300 ease-out mt-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora rem quis soluta necessitatibus esse, corrupti enim. Quam animi quod in dolorum necessitatibus</p>
+
+  <span class="text-primary self-end translate-y-40 group-hover:translate-y-0 transform-gpu transition-transform duration-300 ease-out"><a href=""><%- icons.ArrowRight%></a></span>
+</div>
