@@ -6,14 +6,14 @@ ON CONFLICT (username) DO NOTHING;
 
 -- 2. SEED GENRES
 INSERT INTO genres (name, description) VALUES 
-('action', 'High energy, thrilling stunts, and fast-paced sequences.'),
-('thriller', 'Suspenseful, gripping plots keeping you on the edge of your seat.'),
-('musical', 'Stories driven or accompanied heavily by song and dance numbers.'),
-('comedy', 'Lighthearted and designed to make the audience laugh.'),
-('drama', 'Character-driven stories with high emotional stakes.'),
-('sci-fi', 'Explorations of futuristic technology and space travel.'),
-('romance', 'Stories focusing on love and interpersonal relationships.'),
-('animation', 'Artistic illustrated stories across various subgenres.')
+('Action', 'High energy, thrilling stunts, and fast-paced sequences.'),
+('Thriller', 'Suspenseful, gripping plots keeping you on the edge of your seat.'),
+('Musical', 'Stories driven or accompanied heavily by song and dance numbers.'),
+('Comedy', 'Lighthearted and designed to make the audience laugh.'),
+('Drama', 'Character-driven stories with high emotional stakes.'),
+('Sci-fi', 'Explorations of futuristic technology and space travel.'),
+('Romance', 'Stories focusing on love and interpersonal relationships.'),
+('Animation', 'Artistic illustrated stories across various subgenres.')
 ON CONFLICT (name) DO NOTHING;
 
 
@@ -38,51 +38,51 @@ ON CONFLICT (title) DO NOTHING;
 
 -- 4. MAP MOVIES TO GENRES (Added missing mappings)
 INSERT INTO movies_genres (movie_id, genre_id) VALUES
-((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'romance')),
-((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'drama')),
-((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'comedy')),
-((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'sci-fi')),
+((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'Romance')),
+((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'Drama')),
+((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'Comedy')),
+((SELECT id FROM movies WHERE title = 'About Time'), (SELECT id FROM genres WHERE name = 'Sci-fi')),
 
-((SELECT id FROM movies WHERE title = 'A Silent Voice'), (SELECT id FROM genres WHERE name = 'animation')),
-((SELECT id FROM movies WHERE title = 'A Silent Voice'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'A Silent Voice'), (SELECT id FROM genres WHERE name = 'Animation')),
+((SELECT id FROM movies WHERE title = 'A Silent Voice'), (SELECT id FROM genres WHERE name = 'Drama')),
 
-((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'animation')),
-((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'romance')),
-((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'Animation')),
+((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'Romance')),
+((SELECT id FROM movies WHERE title = 'Your Name'), (SELECT id FROM genres WHERE name = 'Drama')),
 
-((SELECT id FROM movies WHERE title = 'The Wind Rises'), (SELECT id FROM genres WHERE name = 'animation')),
-((SELECT id FROM movies WHERE title = 'The Wind Rises'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'The Wind Rises'), (SELECT id FROM genres WHERE name = 'Animation')),
+((SELECT id FROM movies WHERE title = 'The Wind Rises'), (SELECT id FROM genres WHERE name = 'Drama')),
 
-((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'thriller')),
-((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'drama')),
-((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'sci-fi')),
+((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'Thriller')),
+((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'Drama')),
+((SELECT id FROM movies WHERE title = 'The Prestige'), (SELECT id FROM genres WHERE name = 'Sci-fi')),
 
-((SELECT id FROM movies WHERE title = 'Grave of the Fireflies'), (SELECT id FROM genres WHERE name = 'animation')),
-((SELECT id FROM movies WHERE title = 'Grave of the Fireflies'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'Grave of the Fireflies'), (SELECT id FROM genres WHERE name = 'Animation')),
+((SELECT id FROM movies WHERE title = 'Grave of the Fireflies'), (SELECT id FROM genres WHERE name = 'Drama')),
 
-((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'sci-fi')),
-((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'drama')),
-((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'action')),
+((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'Sci-fi')),
+((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'Drama')),
+((SELECT id FROM movies WHERE title = 'Interstellar'), (SELECT id FROM genres WHERE name = 'Action')),
 
-((SELECT id FROM movies WHERE title = 'The Shining'), (SELECT id FROM genres WHERE name = 'thriller')),
-((SELECT id FROM movies WHERE title = 'The Shining'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'The Shining'), (SELECT id FROM genres WHERE name = 'Thriller')),
+((SELECT id FROM movies WHERE title = 'The Shining'), (SELECT id FROM genres WHERE name = 'Drama')),
 
-((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'sci-fi')),
-((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'action')),
-((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'thriller')),
+((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'Sci-fi')),
+((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'Action')),
+((SELECT id FROM movies WHERE title = 'Inception'), (SELECT id FROM genres WHERE name = 'Thriller')),
 
-((SELECT id FROM movies WHERE title = 'The Godfather'), (SELECT id FROM genres WHERE name = 'drama')),
-((SELECT id FROM movies WHERE title = 'The Godfather'), (SELECT id FROM genres WHERE name = 'thriller')),
+((SELECT id FROM movies WHERE title = 'The Godfather'), (SELECT id FROM genres WHERE name = 'Drama')),
+((SELECT id FROM movies WHERE title = 'The Godfather'), (SELECT id FROM genres WHERE name = 'Thriller')),
 
-((SELECT id FROM movies WHERE title = 'John Wick'), (SELECT id FROM genres WHERE name = 'action')),
-((SELECT id FROM movies WHERE title = 'John Wick'), (SELECT id FROM genres WHERE name = 'thriller')),
+((SELECT id FROM movies WHERE title = 'John Wick'), (SELECT id FROM genres WHERE name = 'Action')),
+((SELECT id FROM movies WHERE title = 'John Wick'), (SELECT id FROM genres WHERE name = 'Thriller')),
 
-((SELECT id FROM movies WHERE title = 'Scent of a Woman'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'Scent of a Woman'), (SELECT id FROM genres WHERE name = 'Drama')),
 
-((SELECT id FROM movies WHERE title = 'Prisoners'), (SELECT id FROM genres WHERE name = 'thriller')),
-((SELECT id FROM movies WHERE title = 'Prisoners'), (SELECT id FROM genres WHERE name = 'drama')),
+((SELECT id FROM movies WHERE title = 'Prisoners'), (SELECT id FROM genres WHERE name = 'Thriller')),
+((SELECT id FROM movies WHERE title = 'Prisoners'), (SELECT id FROM genres WHERE name = 'Drama')),
 
-((SELECT id FROM movies WHERE title = 'Manchester by the Sea'), (SELECT id FROM genres WHERE name = 'drama'))
+((SELECT id FROM movies WHERE title = 'Manchester by the Sea'), (SELECT id FROM genres WHERE name = 'Drama'))
 ON CONFLICT DO NOTHING;
 
 

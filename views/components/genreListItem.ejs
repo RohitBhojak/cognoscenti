@@ -5,10 +5,10 @@
 
   <div class="flex text-primary items-baseline">
     <!-- Initial big letter -->
-    <span class="text-4xl font-serif relative font-semibold"><%= name[0].toUpperCase() %></span>
+    <span class="text-4xl font-serif relative font-semibold uppercase"><%= name[0] %></span>
 
     <!-- Sliding first letter -->
-    <span class="text-lg relative -translate-x-2.5 translate-y-40 group-hover:translate-y-0 group-[.is-active]:translate-y-0 opacity-100 group-hover:opacity-0 group-[.is-active]:opacity-0 font-semibold transform-gpu transition-all duration-300 ease-out"><%= name[0].toUpperCase() %></span>
+    <span class="text-lg relative -translate-x-2.5 translate-y-40 group-hover:translate-y-0 group-[.is-active]:translate-y-0 opacity-100 group-hover:opacity-0 group-[.is-active]:opacity-0 font-semibold transform-gpu transition-all duration-300 ease-out uppercase"><%= name[0] %></span>
 
     <!-- Sliding rest of the name -->
     <span class="text-lg relative -translate-x-2.5 translate-y-40 group-hover:translate-y-0 group-[.is-active]:translate-y-0 font-semibold transform-gpu transition-transform duration-300 ease-out"><%= name.substring(1) %></span>
