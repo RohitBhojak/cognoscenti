@@ -1,4 +1,4 @@
-<%# name %>
+<%# name, description %>
 <div class="p-6 relative bg-neutral-light border border-transparent hover:border-primary group-[.is-active]:border-primary h-60 group rounded-md flex flex-col cursor-pointer overflow-hidden transition-colors duration-300" data-focus-margin="-28% 0px -28% 0px" data-center-focus>
 
   <a href="/?genre=<%= name %>" hx-get="/?genre=<%= name %>" hx-target="#app" hx-swap="innerHTML" hx-push-url="true" hx-indicator="#app-spinner" aria-label="View <%= name %>" class="absolute inset-0 z-10"></a>
@@ -14,7 +14,7 @@
     <span class="text-lg relative -translate-x-2.5 translate-y-40 group-hover:translate-y-0 group-[.is-active]:translate-y-0 font-semibold transform-gpu transition-transform duration-300 ease-out"><%= name.substring(1) %></span>
   </div>
 
-  <p class="text-sm text-secondary-light translate-y-40 group-hover:translate-y-0 group-[.is-active]:translate-y-0 opacity-0 group-hover:opacity-100 group-[.is-active]:opacity-100 transform-gpu transition-all duration-300 ease-out mt-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora rem quis soluta necessitatibus esse, corrupti enim. Quam animi quod in dolorum necessitatibus</p>
+  <p class="text-sm text-secondary-light translate-y-40 group-hover:translate-y-0 group-[.is-active]:translate-y-0 opacity-0 group-hover:opacity-100 group-[.is-active]:opacity-100 transform-gpu transition-all duration-300 ease-out mt-auto"><%= description %></p>
 
   <span aria-hidden="true" class="text-primary self-end translate-y-40 transform-gpu transition-transform duration-300 ease-out group-hover:translate-y-0 group-[.is-active]:translate-y-0 pointer-events-none">
     <%- icons.ArrowRight %>

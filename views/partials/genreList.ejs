@@ -1,5 +1,6 @@
+<%# genres %>
 <div class="m-8 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-8">
-  <% ["Action", "Animation", "Drama", "Thriller", "Action", "Animation", "Drama", "Thriller", "Action", "Animation", "Drama", "Thriller"].forEach(name => { %>
-  <%- include("../components/genreListItem", { name }) %>
+  <% genres.forEach(genre => { %>
+  <%- include("../components/genreListItem", { name: genre.name, description: genre.description }) %>
   <% }) %>
 </div>
