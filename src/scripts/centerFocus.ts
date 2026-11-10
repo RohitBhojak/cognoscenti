@@ -1,69 +1,57 @@
 const mobileViewport = window.matchMedia('(hover: none) and (pointer: coarse)');
 
 if (mobileViewport.matches) {
+  const DEFAULT_MARGIN = '-48% 0px -48% 0px';
   const observedCards = new WeakSet<HTMLElement>();
+  const observersByMargin = new Map<string, IntersectionObserver>();
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        entry.target.classList.toggle('is-active', entry.isIntersecting);
-      }
-    },
-    {
-      rootMargin: '-48% 0px -48% 0px',
+  const getObserverForMargin = (margin: string): IntersectionObserver => {
+    let obs = observersByMargin.get(margin);
+    if (!obs) {
+      obs = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            entry.target.classList.toggle('is-active', entry.isIntersecting);
+          }
+        },
+        { rootMargin: margin }
+      );
+      observersByMargin.set(margin, obs);
     }
-  );
+    return obs;
+  };
 
-  const getCards = (root: ParentNode) => {
+  const observeCards = (root: ParentNode) => {
     const cards: HTMLElement[] = [];
 
     if (root instanceof HTMLElement && root.matches('[data-center-focus]')) {
       cards.push(root);
     }
-
     cards.push(...root.querySelectorAll<HTMLElement>('[data-center-focus]'));
-    return cards;
-  };
 
-  const observeCards = (root: ParentNode) => {
-    for (const card of getCards(root)) {
+    for (const card of cards) {
       if (observedCards.has(card)) continue;
 
+      const customMargin =
+        card.getAttribute('data-center-focus') ||
+        card.closest<HTMLElement>('[data-focus-margin]')?.dataset.focusMargin ||
+        DEFAULT_MARGIN;
+
+      getObserverForMargin(customMargin).observe(card);
       observedCards.add(card);
-      observer.observe(card);
     }
   };
 
-  const unobserveCards = (root: ParentNode) => {
-    for (const card of getCards(root)) {
-      observer.unobserve(card);
-      observedCards.delete(card);
-      card.classList.remove('is-active');
-    }
-  };
-
-  observeCards(document);
-
-  // Covers cards added by any HTMX swap, including outerHTML sentinel swaps.
-  const cardLifecycleObserver = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      for (const node of mutation.addedNodes) {
-        if (node instanceof HTMLElement) observeCards(node);
-      }
-
-      for (const node of mutation.removedNodes) {
-        if (node instanceof HTMLElement) unobserveCards(node);
-      }
+  // HTMX native initializer: runs on page load and after every swap
+  document.body.addEventListener('htmx:load', (event) => {
+    const target = (event as CustomEvent).detail?.elt || event.target;
+    if (target instanceof HTMLElement || target instanceof Document) {
+      observeCards(target);
     }
   });
 
-  cardLifecycleObserver.observe(document.body, { childList: true, subtree: true });
-
-  document.body.addEventListener('htmx:afterSettle', (event) => {
-    const { elt, target } = (event as CustomEvent<{ elt?: EventTarget; target?: EventTarget }>)
-      .detail;
-
-    if (elt instanceof HTMLElement) observeCards(elt);
-    if (target instanceof HTMLElement) observeCards(target);
+  // Re-observe when navigating back/forward with hx-boost
+  document.body.addEventListener('htmx:historyRestore', () => {
+    observeCards(document);
   });
 }
