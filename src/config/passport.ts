@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 import {
   getFederatedCredentialByProviderAndSubject,
   insertFederatedCredential,
-} from '../models/federatedCredentialsRepository.js';
+} from '../models/FederatedCredentialsRepository.js';
 import generateUniqueUsername from '../utils/generateUniqueUsername.js';
 
 const googleClientID = process.env.GOOGLE_CLIENT_ID as string;
