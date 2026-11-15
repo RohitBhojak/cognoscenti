@@ -1,3 +1,3 @@
-<% for( const option of options ) { %>
-<option><%= option.replace(/\b\w/g, char => char.toUpperCase()) %></option>
+<% for( const { name } of options ) { %>
+<option><%= name.replace(/\b\w/g, char => char.toUpperCase()) %></option>
 <% } %>
