@@ -5,6 +5,7 @@
     <%- include("../components/inputText", {id: "director", label: "Director", required: true, datalistUrl: "/options/directors"}) %>
     <%- include("../components/inputText", {id: "yearOfRelease", label: "Year Of Release", required: true, type: "number"}) %>
   </div>
-  <%- include("../components/inputTextArea", {id: "pitch", label: "Curator's Pitch", placeholder: "Sell the film in a few sentences without spoilers", rows: 4, limit: 500})%>
+  <%- include("../components/inputTag", {id: "genres", label: "Genre & Movement", required: true, options: genres, values: { genres: locals.selectedGenres }, errors: locals.errors}) %>
+  <%- include("../components/inputTextArea", {id: "pitch", label: "Curator's Pitch", placeholder: "Sell the film in a few sentences without spoilers", rows: 5, limit: 500})%>
   <%- include("../components/buttonPrimary", {label: "Publish", type: "submit", disabled: true, id: "publish-btn", spinner: true})%>
 </form>
