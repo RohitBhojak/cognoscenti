@@ -1,0 +1,10 @@
+<form id="submitForm" hx-post="/submit" hx-swap="outerHTML" hx-indicator="#publish-btn-spinner" class="flex flex-col gap-8 max-w-2xl bg-neutral mt-15 mx-auto p-10 rounded-lg shadow-md shadow-current">
+  <h1 class="uppercase text-2xl font-serif text-tertiary-light mx-auto font-bold">Add To Archive</h1>
+  <%- include("../components/inputText", {id: "title", label: "Title", required: true}) %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+    <%- include("../components/inputText", {id: "director", label: "Director", required: true}) %>
+    <%- include("../components/inputText", {id: "yearOfRelease", label: "Year Of Release", required: true, type: "number"}) %>
+  </div>
+  <%- include("../components/inputTextArea", {id: "pitch", label: "Curator's Pitch", placeholder: "Sell the film in a few sentences without spoilers", rows: 4, limit: 500})%>
+  <%- include("../components/buttonPrimary", {label: "Publish", type: "submit", disabled: true, id: "publish-btn", spinner: true})%>
+</form>
