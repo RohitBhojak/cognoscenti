@@ -1,0 +1,33 @@
+<%# id, label, placeholder, rows, limit, validateUrl, values: {id}, errors: {id: {msg}} %>
+<% 
+  const hasValidation = Boolean(locals.validateUrl);
+  const maxLength = locals.limit ? Number(locals.limit) : null;
+  const textareaValue = locals.values?.[id] ?? "";
+  const currentLength = String(textareaValue).length;
+%>
+
+<div class="flex flex-col gap-1" hx-disinherit="hx-indicator">
+  <div class="flex items-center justify-between gap-4">
+    <label for="<%= id %>" class="uppercase text-primary tracking-widest">
+      <%= label %> <%= locals.required ? '*' : '' %>
+    </label>
+
+    <% if (maxLength) { %>
+    <span id="<%= id %>-counter" class="text-tertiary font-sans text-sm">
+      <span id="<%= id %>-count"><%= currentLength %></span>/<%= maxLength %>
+    </span>
+    <% } %>
+  </div>
+
+  <div class="input-container relative flex items-center">
+    <textarea name="<%= id %>" id="<%= id %>" placeholder="<%= locals.placeholder || `Enter ${label}` %>" rows="<%= locals.rows || 4 %>" <% if (maxLength) { %> data-character-counter="<%= id %>" maxlength="<%= maxLength %>" <% } %> <% if (locals.required) { %> required <% } %> class="w-full text-tertiary-light font-serif py-2 border-b focus:outline-none border-b-tertiary focus:border-b-primary transition-colors duration-300 resize-none" <%# HTMX Inline Field Validation %> <% if (hasValidation) { %> hx-post="<%- validateUrl %>" hx-trigger="keyup changed delay:400, blur" hx-target="#<%= id %>-error" hx-swap="innerHTML" hx-params="<%= id %>" hx-indicator="#<%= id %>-spinner" <% } %>><%= textareaValue %></textarea>
+
+    <% if (hasValidation) { %>
+    <%- include("./spinner", {color: "border-primary", position: "absolute right-0"}) %>
+    <% } %>
+  </div>
+
+  <div id="<%= id %>-error" data-error>
+    <%- include("./formError", {error: locals.errors?.[id]?.msg}) %>
+  </div>
+</div>
