@@ -24,7 +24,7 @@
       const value = String(option.id);
       const isChecked = selectedValues.includes(value);
     %>
-    <label class="cursor-pointer select-none">
+    <label class="cursor-pointer select-none rounded-full">
       <input type="<%= locals.multiple === false ? 'radio' : 'checkbox' %>" name="<%= fieldName %>" value="<%= value %>" <% if (locals.required && index === 0) { %> required <% } %> <% if (isChecked) { %> checked <% } %> class="peer sr-only">
       <span class="inline-block px-5 py-2 rounded-full border border-tertiary text-sm font-sans text-tertiary-light transition-all duration-300
              hover:border-primary hover:text-primary
