@@ -1,0 +1,42 @@
+<%# id, label, required, ratio, size, name, bw, accept, placeholder, values: {id}, errors: {id: {msg}} %>
+
+<%
+  const aspectClass = locals.ratio === "2/3" ? "aspect-2/3" : locals.ratio === "16/9" ? "aspect-16/9" : (locals.ratio ? `aspect-[${locals.ratio}]` : "aspect-16/9");
+  const sizeClass = locals.size || "w-full";
+  const imageSrc = locals.values?.[id] ?? "";
+  const hasInitialImage = Boolean(imageSrc);
+%>
+
+<div class="flex flex-col gap-1" hx-disinherit="hx-indicator">
+  <label for="<%= id %>" class="uppercase text-primary tracking-widest">
+    <%= label %> <%= locals.required ? '*' : '' %>
+  </label>
+
+  <label for="<%= id %>" class="group relative flex flex-col items-center justify-center overflow-hidden rounded-md border border-dashed border-tertiary bg-neutral-dark/40 cursor-pointer transition-colors duration-300 hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/50 <%= sizeClass %> <%= aspectClass %>">
+    <input type="file" id="<%= id %>" name="<%= locals.name || id %>" accept="<%= locals.accept || 'image/*' %>" <% if (locals.required) { %> required <% } %> data-image-input class="peer sr-only">
+
+    <div data-image-placeholder class="flex flex-col items-center justify-center gap-2 p-6 text-center text-tertiary transition-colors duration-300 group-hover:text-primary <%= hasInitialImage ? 'hidden' : '' %>">
+      <%- icons.Upload %>
+      <span class="font-sans text-sm uppercase tracking-wider">
+        <%= locals.placeholder || "Select Image" %>
+      </span>
+      <% if (locals.ratio) { %>
+      <span class="font-sans text-xs text-tertiary/70">
+        Ratio <%= locals.ratio.replace("/", ":") %>
+      </span>
+      <% } %>
+    </div>
+
+    <img src="<%= imageSrc %>" alt="<%= hasInitialImage ? label : '' %>" data-image-preview class="absolute inset-0 h-full w-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0 <%= hasInitialImage ? '' : 'hidden' %> <%= locals.bw ? 'grayscale' : '' %>">
+
+    <div data-image-overlay class="absolute inset-0 flex items-center justify-center bg-neutral-dark/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100 <%= hasInitialImage ? '' : 'hidden' %>">
+      <span class="rounded-full border border-primary bg-neutral/90 px-4 py-1.5 font-sans text-xs font-bold uppercase tracking-wider text-primary">
+        Change Image
+      </span>
+    </div>
+  </label>
+
+  <div id="<%= id %>-error" data-error>
+    <%- include("./formError", {error: locals.errors?.[id]?.msg}) %>
+  </div>
+</div>

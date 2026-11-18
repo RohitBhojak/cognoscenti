@@ -6,6 +6,10 @@
     <%- include("../components/inputText", {id: "yearOfRelease", label: "Year Of Release", required: true, type: "number"}) %>
   </div>
   <%- include("../components/inputTag", {id: "genres", label: "Genres", required: true, options: genres, values: { genres: locals.selectedGenres }, errors: locals.errors}) %>
+  <div class="grid grid-cols-1 sm:grid-cols-[3fr_8fr] gap-8 items-start">
+    <%- include("../components/inputImage", {id: "poster", label: "Poster", ratio: "2/3", size: "w-48 sm:w-full", placeholder: "Poster", required: true, bw: true}) %>
+    <%- include("../components/inputImage", {id: "banner", label: "Banner", ratio: "16/9", placeholder: "Upload Banner", required: true}) %>
+  </div>
   <%- include("../components/inputTextArea", {id: "pitch", label: "Curator's Pitch", placeholder: "Sell the film in a few sentences without spoilers", rows: 5, limit: 500})%>
   <%- include("../components/buttonPrimary", {label: "Publish", type: "submit", disabled: true, id: "publish-btn", spinner: true})%>
 </form>
